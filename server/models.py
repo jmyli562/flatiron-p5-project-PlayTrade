@@ -1,7 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
-
+from sqlalchemy.orm import validates
 from config import db, bcrypt
 
 # Models go here!
@@ -17,8 +17,8 @@ class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
-    email = db.Column(db.String)
+    username = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String, unique=True, nullable=False)
     library = db.relationship(
         "Game", secondary=game_library, back_populates="owners", lazy="dynamic"
     )
@@ -38,6 +38,18 @@ class User(db.Model, SerializerMixin):
     # checking if the provided password matches the one stored in the db
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password)
+
+    @validates("email")
+    def validate_email(self, key, value):
+        if "@" not in value or ".com" not in value:
+            raise ValueError("Invalid email. Validation failed")
+        return value
+
+    @validates("username")
+    def validate_username(self, key, value):
+        if value == "":
+            raise ValueError("Username must not be blank")
+        return value
 
 
 class Comment(db.Model, SerializerMixin):
