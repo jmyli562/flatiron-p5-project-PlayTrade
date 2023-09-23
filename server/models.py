@@ -35,6 +35,10 @@ class User(db.Model, SerializerMixin):
         bcrypt_hash = bcrypt.generate_password_hash(password).decode("utf-8")
         self._password_hash = bcrypt_hash
 
+    # checking if the provided password matches the one stored in the db
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password)
+
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = "comments"
