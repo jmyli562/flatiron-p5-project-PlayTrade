@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../components/css/Modal.css";
 import { useFormik } from "formik";
+import { useHistory } from "react-router-dom";
 function Modal({ onClose, title, show, content }) {
+  const history = useHistory();
   const [checked, setChecked] = useState(false);
   function handleChange(e) {
     setChecked(e.target.checked);
@@ -22,6 +24,8 @@ function Modal({ onClose, title, show, content }) {
         .then((resp) => resp.json())
         .then((user) => console.log(user));
       resetForm({ values: "" });
+      onClose();
+      history.push("/home");
     },
   });
   return (
@@ -32,7 +36,7 @@ function Modal({ onClose, title, show, content }) {
           <br></br>
         </div>
         <div className="modal-body">
-          {content == "" ? (
+          {content === "" ? (
             <form onSubmit={formik.handleSubmit}>
               <label htmlFor="username">Username</label>
               <input
