@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { withRouter, Switch, Route, useHistory } from "react-router-dom";
-import Login from "./Login";
+import Register from "./Register";
 import NavBar from "./NavBar";
 import "../components/css/App.css";
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <NavBar></NavBar>
       <Switch>
         <Route exact path="/register">
-          <Login />
+          <Register />
         </Route>
       </Switch>
     </div>
