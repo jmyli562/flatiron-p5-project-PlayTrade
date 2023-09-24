@@ -8,8 +8,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 1;
+  opacity: 0;
   transition: all 0.3s ease-in-out;
+  pointer-events: none;
 }
 
 .modal.show {
@@ -17,10 +18,23 @@
   pointer-events: visible;
 }
 
+.modal-header,
+h4,
+.close {
+  background-color: rgb(35, 35, 73);
+  color: white !important;
+  text-align: center;
+  font-size: 15px;
+}
+
+.modal-footer {
+  background-color: #f9f9f9;
+}
+
 .modal-content {
   width: 500px;
   background-color: #fff;
-  transform: translateY(-50px);
+  transform: translateY(-200px);
   transition: all 0.3s ease-in-out;
 }
 

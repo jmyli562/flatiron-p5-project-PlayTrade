@@ -1,13 +1,10 @@
 import React from "react";
 import "../components/css/Modal.css";
 function Modal({ onClose, title, show, content }) {
-  if (!show) {
-    return null;
-  }
   return (
-    <div className={`modal ${show} ? "show" : ""}`} onClick={onClose}>
+    <div className={`modal ${show ? "show" : ""}`} onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
+        <div className="modal-header" style={{ padding: "10px 50px" }}>
           <h1 className="modal-title">{title}</h1>
           <br></br>
         </div>
@@ -20,6 +17,7 @@ function Modal({ onClose, title, show, content }) {
               <input type="text" id="password" name="username"></input>
               <br></br>
               <button>Login</button>
+              <a href="/register">Don't have an account?</a>
             </form>
           ) : (
             <p>{content}</p>
