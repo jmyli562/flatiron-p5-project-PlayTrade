@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { withRouter, Switch, Route, useHistory } from "react-router-dom";
+import Home from "./Home";
+import NavBar from "./NavBar";
 
 function App() {
-  return <h1>Project Homepage</h1>;
+  return (
+    <div>
+      <NavBar></NavBar>
+      <Switch>
+        <Route exact path="/home">
+          <Home />
+        </Route>
+      </Switch>
+    </div>
+  );
 }
 
-export default App;
+export default withRouter(App);
