@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "/home/vlijimmy/Development/code/phase-5/flatiron-p5-project-PlayTrade/client/src/css/NavBar.css";
+import "../components/css/NavBar.css";
 function NavBar() {
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">Game Emporium</Link>
+        <Link to="/">PlayTrade</Link>
       </div>
       <div className="menu-toggle">
         {/* Add a button or icon to toggle the mobile menu */}
@@ -15,7 +15,7 @@ function NavBar() {
       </div>
       <ul className="nav-list">
         <li className="nav-item">
-          <Link to="/home">Home</Link>
+          <Link to="/register">Login/Signup</Link>
         </li>
         <li className="nav-item">
           <Link to="/browse">Browse Games</Link>
