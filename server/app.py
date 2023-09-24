@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import request, session, make_response
 from flask_restful import Resource
+from sqlalchemy.exc import IntegrityError, DataError
 
 # Local imports
 from config import app, db, api
@@ -21,7 +22,28 @@ class User(Resource):
 
     # adding a new user to the database
     def post(self):
-        pass
+        data = request.get_json()
+
+        user = User(
+            username=data["username"],
+            email=data["email"],
+            points=0,
+        )
+
+        user.password_hash = data["password"]
+        try:
+            db.session.add(user)
+            db.session.commit()
+            session["user_id"] = user.id
+            return user.to_dict(), 201
+        except IntegrityError as e:
+            errors = []
+
+            if isinstance(e, (IntegrityError, DataError)):
+                for error in e.orig.args:
+                    errors.append(str(error))
+
+            return {"errors": errors}, 422
 
     # will be used to update the attributes of the user in the database (points)
     def patch(self):

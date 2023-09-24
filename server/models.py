@@ -52,6 +52,12 @@ class User(db.Model, SerializerMixin):
             raise ValueError("Username must not be blank.")
         return value
 
+    @validates("password")
+    def validate_password(self, key, value):
+        if value == "":
+            raise ValueError("Password must not be blank.")
+        return value
+
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = "comments"
