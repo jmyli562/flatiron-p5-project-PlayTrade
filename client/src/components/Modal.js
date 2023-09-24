@@ -1,25 +1,34 @@
 import React from "react";
 import "../components/css/Modal.css";
-function Modal({ props }) {
+function Modal({ onClose, title, show, content }) {
+  if (!show) {
+    return null;
+  }
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className={`modal ${show} ? "show" : ""}`} onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h1 className="modal-title">Login to your Account</h1>
+          <h1 className="modal-title">{title}</h1>
           <br></br>
         </div>
         <div className="modal-body">
-          <form>
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" name="username"></input>
-            <label htmlFor="password">Password</label>
-            <input type="text" id="password" name="username"></input>
-          </form>
-          <br></br>
-          <button>Login</button>
+          {content == "" ? (
+            <form>
+              <label htmlFor="username">Username</label>
+              <input type="text" id="username" name="username"></input>
+              <label htmlFor="password">Password</label>
+              <input type="text" id="password" name="username"></input>
+              <br></br>
+              <button>Login</button>
+            </form>
+          ) : (
+            <p>{content}</p>
+          )}
         </div>
         <div className="modal-footer">
-          <button className="button">Close</button>
+          <button onClick={onClose} className="button">
+            Close
+          </button>
         </div>
       </div>
     </div>
