@@ -18,11 +18,12 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String, nullable=False)
     library = db.relationship(
         "Game", secondary=game_library, back_populates="owners", lazy="dynamic"
     )
     review = db.relationship("Review", backref="user")
+    comment = db.relationship("Comment", backref="user")
     points = db.Column(db.Integer)
     _password_hash = db.Column(db.String)
 
@@ -42,13 +43,13 @@ class User(db.Model, SerializerMixin):
     @validates("email")
     def validate_email(self, key, value):
         if "@" not in value or ".com" not in value:
-            raise ValueError("Invalid email. Validation failed")
+            raise ValueError("Invalid email. Validation failed.")
         return value
 
     @validates("username")
     def validate_username(self, key, value):
         if value == "":
-            raise ValueError("Username must not be blank")
+            raise ValueError("Username must not be blank.")
         return value
 
 
@@ -59,6 +60,8 @@ class Comment(db.Model, SerializerMixin):
     content = db.Column(db.String)
     posted_at = db.Column(db.Date)
     updated_at = db.Column(db.Date)
+    review_id = db.Column(db.Integer, db.ForeignKey("reviews.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
 
 class Game(db.Model, SerializerMixin):
@@ -83,3 +86,4 @@ class Review(db.Model, SerializerMixin):
     content = db.Column(db.String)
     rating = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    comment = db.relationship("Comment", backref="review")
