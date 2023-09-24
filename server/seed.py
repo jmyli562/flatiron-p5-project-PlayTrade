@@ -11,7 +11,7 @@ from app import app
 from models import db, User, Game, Review, Comment
 
 if __name__ == "__main__":
-    fake = Faker()
+    faker = Faker()
     with app.app_context():
         print("Starting seed...")
         # Seed code goes here!
@@ -19,3 +19,11 @@ if __name__ == "__main__":
         Game.query.delete()
         Review.query.delete()
         Comment.query.delete()
+
+        for _ in range(20):
+            username = faker.profile(fields=["username"])["username"]
+
+            user = User(username=username)
+            user.password_hash = username
+            db.session.add(user)
+            db.session.commit()

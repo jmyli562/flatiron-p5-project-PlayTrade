@@ -18,9 +18,28 @@ from models import User, Review, Comment, Game
 
 class User(Resource):
     def get(self):
+        # serializing the user
+        users = [user.to_dict() for user in User.query.all()]
+
+        return make_response(users, 201)
+
+
+api.add_resource(User, "/users")
+
+
+class UserByID(Resource):
+    def get(self, id):
         pass
 
-    # adding a new user to the database
+    # will be used to update the attributes of the user in the database (points)
+    def patch(self, id):
+        pass
+
+
+api.add_resource(UserByID, "/users/<int:id>")
+
+
+class Signup(Resource):
     def post(self):
         data = request.get_json()
 
@@ -45,20 +64,8 @@ class User(Resource):
 
             return {"errors": errors}, 422
 
-    # will be used to update the attributes of the user in the database (points)
-    def patch(self):
-        pass
 
-
-api.add_resource(User, "/users")
-
-
-class UserByID(Resource):
-    def get(self):
-        pass
-
-
-api.add_resource(UserByID, "/users/<int:id>")
+api.add_resource(Signup, "/signup")
 
 
 class Login(Resource):
