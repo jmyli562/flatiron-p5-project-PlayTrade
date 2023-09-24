@@ -7,7 +7,7 @@ function Login() {
     <div>
       <Modal
         onClose={() => setShow(false)}
-        title={"Login into your account"}
+        title={"Login into your Account"}
         show={show}
         content={""}
       />

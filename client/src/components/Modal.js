@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "../components/css/Modal.css";
+import { useFormik } from "formik";
 function Modal({ onClose, title, show, content }) {
+  const [checked, setChecked] = useState(false);
+  function handleChange(e) {
+    setChecked(e.target.checked);
+  }
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    onSubmit: (values, { resetForm }) => {
+      fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((resp) => resp.json())
+        .then((user) => console.log(user));
+      resetForm({ values: "" });
+    },
+  });
   return (
     <div className={`modal ${show ? "show" : ""}`} onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -10,11 +33,31 @@ function Modal({ onClose, title, show, content }) {
         </div>
         <div className="modal-body">
           {content == "" ? (
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <label htmlFor="username">Username</label>
-              <input type="text" id="username" name="username"></input>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                onChange={formik.handleChange}
+                value={formik.values.username}
+              ></input>
               <label htmlFor="password">Password</label>
-              <input type="text" id="password" name="username"></input>
+              <input
+                type={checked ? "text" : "password"}
+                id="password"
+                name="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+              ></input>
+              <input
+                type="checkbox"
+                id="show-password"
+                name="show-password"
+                value="password"
+                onChange={handleChange}
+              ></input>
+              <label for="show-password">Show Password?</label>
               <br></br>
               <button>Login</button>
               <a href="/register">Don't have an account?</a>
@@ -24,7 +67,7 @@ function Modal({ onClose, title, show, content }) {
           )}
         </div>
         <div className="modal-footer">
-          <button onClick={onClose} className="button">
+          <button type="submit" onClick={onClose} className="button">
             Close
           </button>
         </div>
