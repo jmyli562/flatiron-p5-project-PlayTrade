@@ -5,12 +5,15 @@ function Login() {
     initialValues: {
       username: "",
       email: "",
-      channel: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      console.log("form data", values);
     },
   });
   return (
     <div>
-      <form>
+      <form onSubmit={formik.handleSubmit}>
         <label htmlFor="username">Username</label>
         <input
           type="text"
@@ -21,12 +24,24 @@ function Login() {
         />
 
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" name="email" />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+        />
 
         <label htmlFor="password">Password</label>
-        <input type="text" id="password" name="password" />
+        <input
+          type="text"
+          id="password"
+          name="password"
+          onChange={formik.handleChange}
+          value={formik.values.password}
+        />
 
-        <button>Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
