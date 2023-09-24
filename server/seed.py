@@ -20,10 +20,4 @@ if __name__ == "__main__":
         Review.query.delete()
         Comment.query.delete()
 
-        for _ in range(20):
-            username = faker.profile(fields=["username"])["username"]
-
-            user = User(username=username)
-            user.password_hash = username
-            db.session.add(user)
-            db.session.commit()
+        db.session.commit()

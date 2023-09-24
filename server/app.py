@@ -16,7 +16,7 @@ from models import User, Review, Comment, Game
 # Views go here!
 
 
-class User(Resource):
+class Users(Resource):
     def get(self):
         # serializing the user
         users = [user.to_dict() for user in User.query.all()]
@@ -24,7 +24,7 @@ class User(Resource):
         return make_response(users, 201)
 
 
-api.add_resource(User, "/users")
+api.add_resource(Users, "/users")
 
 
 class UserByID(Resource):
@@ -126,7 +126,7 @@ class Comment(Resource):
         pass
 
 
-api.add_resource(Comment, "/")
+api.add_resource(Comment, "/comments")
 
 
 @app.route("/")
