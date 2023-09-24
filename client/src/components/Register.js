@@ -1,14 +1,24 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 function Login() {
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       username: "",
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      console.log("form data", values);
+    onSubmit: (values, { resetForm }) => {
+      fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      resetForm({ values: "" });
+      history.push("/login");
     },
     validate: (values) => {
       let errors = {};
@@ -33,6 +43,7 @@ function Login() {
   });
   return (
     <div>
+      <h1>Register an Account</h1>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-control">
           <label htmlFor="username">Username</label>
@@ -41,9 +52,10 @@ function Login() {
             id="username"
             name="username"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.username}
           />
-          {formik.errors.username ? (
+          {formik.touched.username && formik.errors.username ? (
             <div className="error">{formik.errors.username}</div>
           ) : null}
         </div>
@@ -54,9 +66,10 @@ function Login() {
             id="email"
             name="email"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-          {formik.errors.email ? (
+          {formik.touched.email && formik.errors.email ? (
             <div className="error">{formik.errors.email}</div>
           ) : null}
         </div>
@@ -67,10 +80,11 @@ function Login() {
             id="password"
             name="password"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.password}
           />
 
-          {formik.errors.password ? (
+          {formik.touched.password && formik.errors.password ? (
             <div className="error">{formik.errors.password}</div>
           ) : null}
         </div>
