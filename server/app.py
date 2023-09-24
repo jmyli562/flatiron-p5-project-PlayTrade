@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session
+from flask import request, session, make_response
 from flask_restful import Resource
 
 # Local imports
@@ -41,7 +41,24 @@ api.add_resource(UserByID, "/users/<int:id>")
 
 class Login(Resource):
     def post(self):
-        pass
+        data = request.get_json()
+        username = data["username"]
+        password = data["password"]
+
+        user = User.query.filter(User.username == password).first()
+
+        if user.authenticate(password):
+            session["user_id"] = user.id
+
+            auth_user = {
+                "username": user.username,
+                "email": user.email,
+                "points": user.points,
+            }
+
+            return make_response(auth_user.to_dict(), 200)
+
+        return {"error": "Invalid username or password"}, 401
 
 
 api.add_resource(Login, "/login")
