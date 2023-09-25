@@ -4,7 +4,8 @@ import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 function Modal({ onClose, title, show, content }) {
-  const { currUser, setCurrUser } = useContext(AppContext);
+  const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
+    useContext(AppContext);
   const history = useHistory();
   const [checked, setChecked] = useState(false);
   function handleChange(e) {
@@ -22,22 +23,24 @@ function Modal({ onClose, title, show, content }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
-      })
-        .then((resp) => {
-          if (resp.ok) {
-            resetForm({ values: "" });
-            onClose();
-            history.push("/home");
-          } else {
-            resp
-              .json()
-              .then((err) =>
-                window.alert("Username or password is incorrect.")
-              );
-          }
-        })
-        .then((user) => setCurrUser(user));
-      console.log(currUser);
+      }).then((resp) => {
+        if (resp.ok) {
+          resp.json().then((user) => {
+            currUser.username = user.username;
+            currUser.email = user.email;
+            currUser.points = user.points;
+            setCurrUser({ ...currUser });
+            setLoggedIn((isLoggedIn) => !isLoggedIn);
+          });
+          resetForm({ values: "" });
+          onClose();
+          history.push("/home");
+        } else {
+          resp
+            .json()
+            .then((err) => window.alert("Username or password is incorrect."));
+        }
+      });
     },
   });
   return (

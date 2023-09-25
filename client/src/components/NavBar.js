@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "../components/css/NavBar.css";
+import { AppContext } from "../context/AppProvider";
 function NavBar() {
+  const { currUser, isLoggedIn } = useContext(AppContext);
   return (
     <nav className="navbar">
       <div className="logo">
@@ -14,12 +16,25 @@ function NavBar() {
         <span className="bar"></span>
       </div>
       <ul className="nav-list">
+        {isLoggedIn ? (
+          <li className="nav-item">
+            <Link to="/profile" style={{ color: "purple" }}>
+              Welcome, {currUser.username}
+            </Link>
+          </li>
+        ) : null}
         <li className="nav-item">
           <Link to="/home">HomePage</Link>
         </li>
-        <li className="nav-item">
-          <Link to="/register">Login/Signup</Link>
-        </li>
+        {isLoggedIn ? (
+          <li className="nav-item">
+            <Link to="/logout">Logout</Link>
+          </li>
+        ) : (
+          <li className="nav-item">
+            <Link to="/register">Login/Signup</Link>
+          </li>
+        )}
         <li className="nav-item">
           <Link to="/browse">Browse Games</Link>
         </li>
