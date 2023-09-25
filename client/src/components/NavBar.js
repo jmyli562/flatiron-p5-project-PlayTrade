@@ -8,7 +8,7 @@ function NavBar() {
       method: "DELETE",
     }).then((resp) => {
       if (resp.ok) {
-        setCurrUser({ username: "" });
+        setCurrUser({});
         setLoggedIn(() => !isLoggedIn);
       }
     });
@@ -29,7 +29,7 @@ function NavBar() {
       <ul className="nav-list">
         {isLoggedIn ? (
           <li className="nav-item">
-            <Link to="/profile" style={{ color: "purple" }}>
+            <Link to="/profile" style={{ color: "#ff5722" }}>
               Welcome, {currUser.username}
             </Link>
             <button style={{ textAlign: "center" }} onClick={handleLogout}>
@@ -38,7 +38,7 @@ function NavBar() {
           </li>
         ) : null}
         <li className="nav-item">
-          <Link to="/home">Homepage</Link>
+          <Link to="/home">Home</Link>
         </li>
         <li className="nav-item">
           <Link to="/browse">Browse Games</Link>

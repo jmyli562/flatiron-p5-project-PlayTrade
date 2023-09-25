@@ -1,6 +1,7 @@
 import React from "react";
 import "../components/css/Home.css";
-function Home() {
+import GameCard from "./GameCard";
+function Home({ games }) {
   return (
     <div>
       <main>
@@ -11,28 +12,18 @@ function Home() {
             Explore Games
           </a>
         </section>
-
         <section className="featured-games">
           <h2>Featured Games</h2>
-          <div className="game-card">
-            <img src="" alt="Game 1" />
-            <h3>Game Title 1</h3>
-            <p>Description of Game 1.</p>
-            <span className="price">$49.99</span>
-            <a href="#" className="buy-button">
-              Buy Now
-            </a>
+          <div>
+            {games.map((game) => {
+              <GameCard
+                title={game.title}
+                image={game.background_image}
+                releaseDate={game.released}
+                rating={game.rating}
+              ></GameCard>;
+            })}
           </div>
-          <div className="game-card">
-            <img src="" alt="Game 2" />
-            <h3>Game Title 2</h3>
-            <p>Description of Game 2.</p>
-            <span className="price">$59.99</span>
-            <a href="#" className="buy-button">
-              Buy Now
-            </a>
-          </div>
-          {/* Add more featured game cards as needed */}
         </section>
       </main>
 

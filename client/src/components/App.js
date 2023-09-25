@@ -20,10 +20,10 @@ function App() {
       }
     });
     fetch(
-      `https://rawg.io/api/games?token&key=${process.env.REACT_APP_API_KEY}&page=1&page_size=40`
+      `https://rawg.io/api/games?token&key=${process.env.REACT_APP_API_KEY}&page=1&page_size=5`
     )
       .then((resp) => resp.json())
-      .then((data) => data.results.map((gameData) => console.log(gameData)))
+      .then((data) => data.results.map((gameData) => games.push(gameData)))
       .catch((error) => console.log("Error:", error));
   }, []);
   return (
@@ -34,7 +34,7 @@ function App() {
           <Home />
         </Route>
         <Route exact path="/home">
-          <Home />
+          <Home games={games} />
         </Route>
       </Switch>
       <Switch>
