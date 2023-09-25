@@ -7,6 +7,7 @@ import Home from "./Home";
 import NavBar from "./NavBar";
 import "../components/css/App.css";
 function App() {
+  const games = [];
   const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
     useContext(AppContext);
   useEffect(() => {
@@ -18,6 +19,12 @@ function App() {
         );
       }
     });
+    fetch(
+      `https://rawg.io/api/games?token&key=${process.env.REACT_APP_API_KEY}&page=1&page_size=40`
+    )
+      .then((resp) => resp.json())
+      .then((data) => data.results.map((gameData) => console.log(gameData)))
+      .catch((error) => console.log("Error:", error));
   }, []);
   return (
     <div>

@@ -32,7 +32,7 @@ function NavBar() {
             <Link to="/profile" style={{ color: "purple" }}>
               Welcome, {currUser.username}
             </Link>
-            <button style={{ "text-align": "center" }} onClick={handleLogout}>
+            <button style={{ textAlign: "center" }} onClick={handleLogout}>
               Logout
             </button>
           </li>

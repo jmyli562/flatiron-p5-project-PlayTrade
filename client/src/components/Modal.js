@@ -73,7 +73,7 @@ function Modal({ onClose, title, show, content }) {
                 value="password"
                 onChange={handleChange}
               ></input>
-              <label for="show-password">Show Password?</label>
+              <label htmlFor="show-password">Show Password?</label>
               <br></br>
               <button>Login</button>
               <a href="/register">Don't have an account?</a>
