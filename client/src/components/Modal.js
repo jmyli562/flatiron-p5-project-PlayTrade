@@ -26,10 +26,7 @@ function Modal({ onClose, title, show, content }) {
       }).then((resp) => {
         if (resp.ok) {
           resp.json().then((user) => {
-            currUser.username = user.username;
-            currUser.email = user.email;
-            currUser.points = user.points;
-            setCurrUser({ ...currUser });
+            setCurrUser(user);
             setLoggedIn((isLoggedIn) => !isLoggedIn);
           });
           resetForm({ values: "" });
