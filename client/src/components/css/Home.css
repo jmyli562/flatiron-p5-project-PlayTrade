@@ -1,0 +1,118 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  background-image: url(https://media.istockphoto.com/id/1140828326/vector/retro-neon-background-with-80s-styled-laser-grid-and-stars.jpg?s=612x612&w=0&k=20&c=wnw0f35ERwayC4TlDo_0sd25b1PHKS4G5ucFD5xTNFo=);
+  background-size: cover;
+}
+
+/* Header styles */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.logo h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style-type: none;
+}
+
+.nav-links li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Hero section styles */
+.hero {
+  /*
+  background-image: url("hero-bg.jpg");
+*/
+  background-size: cover;
+  text-align: center;
+  padding: 100px 0;
+  color: #fff;
+}
+
+.hero h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff5722;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+/* Featured games section styles */
+.featured-games {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.game-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-card img {
+  max-width: 100%;
+}
+
+.game-card h3 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.game-card p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.buy-button {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #ff5722;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
