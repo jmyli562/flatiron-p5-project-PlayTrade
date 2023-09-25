@@ -15,14 +15,15 @@ function Home({ games }) {
         <section className="featured-games">
           <h2>Featured Games</h2>
           <div>
-            {games.map((game) => {
+            {games.map((game) => (
               <GameCard
-                title={game.title}
+                key={game.id}
+                title={game.name}
                 image={game.background_image}
                 releaseDate={game.released}
                 rating={game.rating}
-              ></GameCard>;
-            })}
+              />
+            ))}
           </div>
         </section>
       </main>

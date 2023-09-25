@@ -27,16 +27,6 @@ function NavBar() {
         <span className="bar"></span>
       </div>
       <ul className="nav-list">
-        {isLoggedIn ? (
-          <li className="nav-item">
-            <Link to="/profile" style={{ color: "#ff5722" }}>
-              Welcome, {currUser.username}
-            </Link>
-            <button style={{ textAlign: "center" }} onClick={handleLogout}>
-              Logout
-            </button>
-          </li>
-        ) : null}
         <li className="nav-item">
           <Link to="/home">Home</Link>
         </li>
@@ -45,9 +35,6 @@ function NavBar() {
         </li>
         <li className="nav-item">
           <Link to="/library">My Library</Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/profile">Profile</Link>
         </li>
         {isLoggedIn ? (
           <li className="nav-item">
@@ -58,6 +45,16 @@ function NavBar() {
             <Link to="/register">Login/Signup</Link>
           </li>
         )}
+        {isLoggedIn ? (
+          <li className="nav-item">
+            <Link to="/profile" style={{ color: "#ff5722" }}>
+              Welcome, {currUser.username}
+            </Link>
+            <button style={{ textAlign: "center" }} onClick={handleLogout}>
+              Logout
+            </button>
+          </li>
+        ) : null}
       </ul>
     </nav>
   );

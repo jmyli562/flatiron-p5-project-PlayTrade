@@ -7,7 +7,8 @@ import Home from "./Home";
 import NavBar from "./NavBar";
 import "../components/css/App.css";
 function App() {
-  const games = [];
+  const [games, setGames] = useState([]);
+  const tempArr = [];
   const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
     useContext(AppContext);
   useEffect(() => {
@@ -19,13 +20,22 @@ function App() {
         );
       }
     });
-    fetch(
-      `https://rawg.io/api/games?token&key=${process.env.REACT_APP_API_KEY}&page=1&page_size=5`
-    )
-      .then((resp) => resp.json())
-      .then((data) => data.results.map((gameData) => games.push(gameData)))
-      .catch((error) => console.log("Error:", error));
   }, []);
+  useEffect(() => {
+    async function getVideoGames() {
+      await fetch(
+        `https://rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}&page_size=5`
+      )
+        .then((resp) => resp.json())
+        .then((data) =>
+          data.results.map((gameData) => {
+            tempArr.push(gameData);
+          })
+        );
+    }
+    getVideoGames();
+  }, []);
+  console.log(games);
   return (
     <div>
       <NavBar></NavBar>
