@@ -5,13 +5,15 @@ function Home({ games }) {
   return (
     <div>
       <main>
-        <section className="hero">
-          <h1>Welcome to Your Video Game Store</h1>
-          <p>Discover, buy, and play the latest video games!</p>
-          <a href="#" className="cta-button">
-            Explore Games
-          </a>
-        </section>
+        <div className="header-content">
+          <section className="hero">
+            <h1>Welcome to Your Video Game Store</h1>
+            <p>Discover, buy, and play the latest video games!</p>
+            <a href="#" className="cta-button">
+              Explore Games
+            </a>
+          </section>
+        </div>
         <section className="featured-games">
           <h2>Featured Games</h2>
           <div>
@@ -28,7 +30,7 @@ function Home({ games }) {
         </section>
       </main>
 
-      <footer>
+      <footer className="home-footer">
         <p>&copy; 2023 Your Video Game Store</p>
       </footer>
     </div>

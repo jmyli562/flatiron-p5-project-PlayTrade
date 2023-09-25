@@ -8,7 +8,6 @@ import NavBar from "./NavBar";
 import "../components/css/App.css";
 function App() {
   const [games, setGames] = useState([]);
-  const tempArr = [];
   const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
     useContext(AppContext);
   useEffect(() => {
@@ -27,15 +26,16 @@ function App() {
         `https://rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}&page_size=5`
       )
         .then((resp) => resp.json())
-        .then((data) =>
+        .then((data) => {
+          const tempArr = [];
           data.results.map((gameData) => {
             tempArr.push(gameData);
-          })
-        );
+          });
+          setGames(tempArr);
+        });
     }
     getVideoGames();
   }, []);
-  console.log(games);
   return (
     <div>
       <NavBar></NavBar>

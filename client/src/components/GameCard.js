@@ -8,7 +8,7 @@ function GameCard({ title, image, releaseDate, rating }) {
         alt={title}
         className="game-card-image"
         width="1000px"
-        height="100px"
+        height="1000px"
       ></img>
       <h3 className="game-card-title">{title}</h3>
       <span>Released:{releaseDate}</span>
