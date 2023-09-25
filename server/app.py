@@ -92,9 +92,9 @@ class CheckSession(Resource):
         user = User.query.filter(User.id == session.get("user_id")).first()
 
         if user:
-            return make_response(user.to_dict())
+            return jsonify(user.to_dict())
         else:
-            return jsonify({"message": "401: Not Authorized"}), 401
+            return make_response(jsonify({"message": "401: Not Authorized"}), 401)
 
 
 api.add_resource(CheckSession, "/check_session")
@@ -103,8 +103,7 @@ api.add_resource(CheckSession, "/check_session")
 class Logout(Resource):
     def delete(self):
         session["user_id"] = None
-        response = make_response("", 204)
-        return response
+        return 204
 
 
 api.add_resource(Logout, "/logout")
