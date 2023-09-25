@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../components/css/Modal.css";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "../context/AppProvider";
 function Modal({ onClose, title, show, content }) {
+  const { currUser, setCurrUser } = useContext(AppContext);
   const history = useHistory();
   const [checked, setChecked] = useState(false);
   function handleChange(e) {
@@ -21,11 +23,21 @@ function Modal({ onClose, title, show, content }) {
         },
         body: JSON.stringify(values),
       })
-        .then((resp) => resp.json())
-        .then((user) => console.log(user));
-      resetForm({ values: "" });
-      onClose();
-      history.push("/home");
+        .then((resp) => {
+          if (resp.ok) {
+            resetForm({ values: "" });
+            onClose();
+            history.push("/home");
+          } else {
+            resp
+              .json()
+              .then((err) =>
+                window.alert("Username or password is incorrect.")
+              );
+          }
+        })
+        .then((user) => setCurrUser(user));
+      console.log(currUser);
     },
   });
   return (

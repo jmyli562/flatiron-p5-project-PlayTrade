@@ -16,9 +16,18 @@ function Login() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
+      }).then((resp) => {
+        if (resp.ok) {
+          resetForm({ values: "" });
+          history.push("/login");
+        } else {
+          resp
+            .json()
+            .then((err) =>
+              window.alert("A user with that username or email already exists.")
+            );
+        }
       });
-      resetForm({ values: "" });
-      history.push("/login");
     },
     validate: (values) => {
       let errors = {};
