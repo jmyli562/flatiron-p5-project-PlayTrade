@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session, make_response
+from flask import request, session, make_response, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError, DataError
 
@@ -85,6 +85,19 @@ class Login(Resource):
 
 
 api.add_resource(Login, "/login")
+
+
+class CheckSession(Resource):
+    def get(self):
+        user = User.query.filter(User.id == session.get("user_id")).first()
+
+        if user:
+            return make_response(user.to_dict())
+        else:
+            return jsonify({"message": "401: Not Authorized"}), 401
+
+
+api.add_resource(CheckSession, "/check_session")
 
 
 class Logout(Resource):
