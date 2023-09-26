@@ -82,6 +82,7 @@ class Game(db.Model, SerializerMixin):
     owners = db.relationship(
         "User", secondary=game_library, back_populates="library", lazy="dynamic"
     )
+    reviews = db.relationship("Review", backref="game")
 
 
 class Review(db.Model, SerializerMixin):
@@ -91,4 +92,5 @@ class Review(db.Model, SerializerMixin):
     content = db.Column(db.String)
     rating = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    game_id = db.Column(db.Integer, db.ForeignKey("games.id"))
     comment = db.relationship("Comment", backref="review")
