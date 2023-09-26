@@ -111,7 +111,9 @@ api.add_resource(Logout, "/logout")
 
 class Games(Resource):
     def get(self):
-        pass
+        games = [game.to_dict() for game in Game.query.all()]
+
+        return make_response(games, 201)
 
     def post(self):
         data = request.get_json()
