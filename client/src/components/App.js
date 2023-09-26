@@ -5,11 +5,26 @@ import Register from "./Register";
 import Login from "./Login";
 import Home from "./Home";
 import NavBar from "./NavBar";
+import GameList from "./GameList";
 import "../components/css/App.css";
 function App() {
-  const [games, setGames] = useState([]);
+  const [featuredGames, setFeaturedGames] = useState([]);
+  const [allGames, setAllGames] = useState([]);
   const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
     useContext(AppContext);
+  /*
+  function addGamesToDatabase(games) {
+    for (let i = 0; i < games.length; i++) {
+      fetch("/games", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(games[i]),
+      });
+    }
+  }
+  */
   useEffect(() => {
     fetch("/check_session").then((response) => {
       if (response.ok) {
@@ -23,7 +38,7 @@ function App() {
   useEffect(() => {
     async function getVideoGames() {
       await fetch(
-        `https://rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}&page_size=5`
+        `https://rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}&page=1&page_size=10`
       )
         .then((resp) => resp.json())
         .then((data) => {
@@ -31,7 +46,8 @@ function App() {
           data.results.map((gameData) => {
             tempArr.push(gameData);
           });
-          setGames(tempArr);
+          setFeaturedGames(tempArr);
+          //addGamesToDatabase(tempArr);
         });
     }
     getVideoGames();
@@ -41,10 +57,10 @@ function App() {
       <NavBar></NavBar>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home games={featuredGames} />
         </Route>
         <Route exact path="/home">
-          <Home games={games} />
+          <Home games={featuredGames} />
         </Route>
       </Switch>
       <Switch>
@@ -55,6 +71,11 @@ function App() {
       <Switch>
         <Route exact path="/login">
           <Login />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path="/games">
+          <GameList />
         </Route>
       </Switch>
     </div>

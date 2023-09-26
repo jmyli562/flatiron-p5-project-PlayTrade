@@ -31,7 +31,7 @@ function NavBar() {
           <Link to="/home">Home</Link>
         </li>
         <li className="nav-item">
-          <Link to="/browse">Browse Games</Link>
+          <Link to="/games">Browse Games</Link>
         </li>
         <li className="nav-item">
           <Link to="/library">My Library</Link>

@@ -9,7 +9,7 @@ function Home({ games }) {
           <section className="hero">
             <h1>Welcome to Your Video Game Store</h1>
             <p>Discover, buy, and play the latest video games!</p>
-            <a href="#" className="cta-button">
+            <a href="/games" className="cta-button">
               Explore Games
             </a>
           </section>
