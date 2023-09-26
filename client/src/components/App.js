@@ -11,7 +11,7 @@ import "../components/css/App.css";
 function App() {
   const [featuredGames, setFeaturedGames] = useState([]);
   const [allGames, setAllGames] = useState([]);
-  const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
+  const { currUser, setCurrUser, isLoggedIn, setLoggedIn, selectedGame } =
     useContext(AppContext);
   /*
   function addGamesToDatabase(games) {
@@ -90,7 +90,7 @@ function App() {
       </Switch>
       <Switch>
         <Route exact path="/game/:game/review">
-          <GameReview />
+          <GameReview game={selectedGame} />
         </Route>
       </Switch>
     </div>

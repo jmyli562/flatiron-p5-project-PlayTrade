@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import StarRating from "./StarRating";
+import { AppContext } from "../context/AppProvider";
 import "../components/css/GameCard.css";
-function GameCard({ title, image, releaseDate, rating, price }) {
+function GameCard({ game, title, image, releaseDate, rating, price }) {
+  //console.log(game);
+  const history = useHistory();
+  const { setSelectedGame } = useContext(AppContext);
   function createSlugTitle(title) {
     return title
       .toLowerCase()
@@ -18,7 +23,15 @@ function GameCard({ title, image, releaseDate, rating, price }) {
       {/*reminder to add conditional rendering: if a game has no reviews: render "leave a review"*/}
       {/*/ when user clicks takes them to /game_name/add_review*/}
       {/*if the game already has a review, show See Reviews (1) <- number of reviews and take user to page to leave a comment on the review */}
-      <a href={"/game/" + createSlugTitle(title) + "/review"}>Leave a review</a>
+      <span
+        className="game-card-span"
+        onClick={() => {
+          setSelectedGame(game);
+          history.push(`/game/${createSlugTitle(title)}/review`);
+        }}
+      >
+        Leave a Review
+      </span>
       <br></br>
       {/*if the user is not logged in gray out the add game to cart button and disable clicking */}
       <button className="game-card-button">Add Game to Cart 🛒</button>

@@ -20,6 +20,7 @@ function Home({ games }) {
             {games.map((game) => (
               <GameCard
                 key={game.id}
+                game={game}
                 title={game.name}
                 image={game.background_image}
                 releaseDate={game.released}

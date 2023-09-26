@@ -12,11 +12,14 @@ function AppProvider({ children }) {
     points: 0,
   });
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [selectedGame, setSelectedGame] = useState({});
   const value = {
     currUser,
     setCurrUser,
     isLoggedIn,
     setLoggedIn,
+    selectedGame,
+    setSelectedGame,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

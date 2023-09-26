@@ -49,6 +49,7 @@ function GameList({ allgames }) {
           filteredGames.map((game, index) => (
             <div key={game.id} className="game-card">
               <GameCard
+                game={game}
                 title={game.name}
                 image={game.image_url}
                 releaseDate={game.release_date}

@@ -65,3 +65,9 @@
   font-weight: bold;
   margin: 10px 0;
 }
+
+.game-card-span {
+  cursor: pointer;
+  color: rgb(78, 16, 223);
+  text-decoration: underline;
+}
