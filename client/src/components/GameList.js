@@ -25,7 +25,7 @@ function GameList({ allgames }) {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search by title"
+          placeholder="Search by title... 🔍"
           value={titleFilter}
           onChange={(e) => setTitleFilter(e.target.value)}
         />
@@ -53,6 +53,7 @@ function GameList({ allgames }) {
                 image={game.image_url}
                 releaseDate={game.release_date}
                 rating={game.rating}
+                price={game.price}
               ></GameCard>
             </div>
           ))

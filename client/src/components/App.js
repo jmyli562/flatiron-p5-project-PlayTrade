@@ -6,6 +6,7 @@ import Login from "./Login";
 import Home from "./Home";
 import NavBar from "./NavBar";
 import GameList from "./GameList";
+import GameReview from "./GameReview";
 import "../components/css/App.css";
 function App() {
   const [featuredGames, setFeaturedGames] = useState([]);
@@ -85,6 +86,11 @@ function App() {
       <Switch>
         <Route exact path="/games">
           <GameList allgames={allGames} />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path="/game/:game/review">
+          <GameReview />
         </Route>
       </Switch>
     </div>
