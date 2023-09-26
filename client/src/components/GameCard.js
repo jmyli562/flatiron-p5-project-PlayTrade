@@ -3,13 +3,7 @@ import "../components/css/GameCard.css";
 function GameCard({ title, image, releaseDate, rating }) {
   return (
     <div className="game-card">
-      <img
-        src={image}
-        alt={title}
-        className="game-card-image"
-        width="1000px"
-        height="1000px"
-      ></img>
+      <img src={image} alt={title} className="game-card-image"></img>
       <h3 className="game-card-title">{title}</h3>
       <span>Released:{releaseDate}</span>
       <p>Rating: {rating}</p>
