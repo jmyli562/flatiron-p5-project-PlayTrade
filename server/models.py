@@ -75,10 +75,9 @@ class Game(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    release_date = db.Column(db.Date)
+    release_date = db.Column(db.String)
     image_url = db.Column(db.String)
-    developer = db.Column(db.String)
-    description = db.Column(db.String)
+    rating = db.Column(db.Integer)
     price = db.Column(db.Integer)
     owners = db.relationship(
         "User", secondary=game_library, back_populates="library", lazy="dynamic"

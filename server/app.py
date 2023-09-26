@@ -109,6 +109,43 @@ class Logout(Resource):
 api.add_resource(Logout, "/logout")
 
 
+class Games(Resource):
+    def get(self):
+        pass
+
+    def post(self):
+        data = request.get_json()
+
+        name = data["name"]
+        release_date = data["released"]
+        image_url = data["background_image"]
+        rating = data["rating"]
+
+        new_game = Game(
+            name=name,
+            release_date=release_date,
+            image_url=image_url,
+            price=60,
+            rating=rating,
+        )
+
+        try:
+            db.session.add(new_game)
+            db.session.commit()
+            return new_game.to_dict(), 201
+        except IntegrityError as e:
+            errors = []
+
+            if isinstance(e, (IntegrityError, DataError)):
+                for error in e.orig.args:
+                    errors.append(str(error))
+
+            return {"errors": errors}, 422
+
+
+api.add_resource(Games, "/games")
+
+
 class GameLibrary(Resource):
     def get(self, id):
         pass
