@@ -1,5 +1,6 @@
 import React from "react";
 import StarRating from "./StarRating";
+import Modal from "./Modal";
 import "../components/css/GameCard.css";
 function GameCard({ title, image, releaseDate, rating }) {
   return (
@@ -9,7 +10,7 @@ function GameCard({ title, image, releaseDate, rating }) {
       <span>Released:{releaseDate}</span>
       <StarRating rating={rating}></StarRating>
       <br></br>
-      <button className="game-card-button">Buy now</button>
+      <button className="game-card-button">View more details</button>
     </div>
   );
 }

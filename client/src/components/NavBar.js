@@ -21,7 +21,6 @@ function NavBar() {
         <Link to="/">PlayTrade</Link>
       </div>
       <div className="menu-toggle">
-        {/* Add a button or icon to toggle the mobile menu */}
         <span className="bar"></span>
         <span className="bar"></span>
         <span className="bar"></span>

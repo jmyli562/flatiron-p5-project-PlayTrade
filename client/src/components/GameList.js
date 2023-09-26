@@ -8,7 +8,6 @@ function GameList({ allgames }) {
     game.name.toLowerCase().includes(titleFilter.toLowerCase())
   );
   filteredGames.sort((a, b) => {
-    console.log(sortFilter);
     if (sortFilter === "AtoZ") {
       return a.name.localeCompare(b.name);
     } else if (sortFilter === "ZtoA") {
