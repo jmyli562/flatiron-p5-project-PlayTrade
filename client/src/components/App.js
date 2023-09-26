@@ -34,9 +34,8 @@ function App() {
         );
       }
     });
-  }, []);
-  useEffect(() => {
-    async function getVideoGames() {
+
+    async function getFeaturedGames() {
       await fetch(
         `https://rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}&page=1&page_size=10`
       )
@@ -50,7 +49,17 @@ function App() {
           //addGamesToDatabase(tempArr);
         });
     }
-    getVideoGames();
+    async function getAllGames() {
+      await fetch("/games").then((response) => {
+        if (response.ok) {
+          response.json().then((games) => {
+            setAllGames(games);
+          });
+        }
+      });
+    }
+    getFeaturedGames();
+    getAllGames();
   }, []);
   return (
     <div>
@@ -75,7 +84,7 @@ function App() {
       </Switch>
       <Switch>
         <Route exact path="/games">
-          <GameList />
+          <GameList allgames={allGames} />
         </Route>
       </Switch>
     </div>

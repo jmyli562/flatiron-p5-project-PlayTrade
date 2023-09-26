@@ -1,0 +1,44 @@
+/* Container styles */
+.BrowseGames {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Title styles */
+.game-list-header,
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  background-color: #49509e;
+}
+
+/* Search bar styles */
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Game grid styles */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 games per row */
+  gap: 20px; /* Gap between game cards */
+}

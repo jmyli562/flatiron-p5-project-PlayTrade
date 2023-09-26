@@ -31,7 +31,7 @@ function Home({ games }) {
       </main>
 
       <footer className="home-footer">
-        <p>&copy; 2023 Your Video Game Store</p>
+        <p>&copy; 2023 PlayTrade</p>
       </footer>
     </div>
   );

@@ -69,12 +69,15 @@ header {
 h2 {
   padding: 20px 0;
   text-align: center;
-  background-color: rgb(63, 67, 77);
+  background-color: #1e4368;
 }
 
 .home-footer {
-  background-color: rgb(72, 83, 228);
-  max-height: 20px;
+  background-color: rgb(19, 18, 119);
+  bottom: 0;
+  font-family: "Open Sans", sans-serif;
+  color: #ffffff;
+  padding: 20px;
 }
 
 .header-content {
