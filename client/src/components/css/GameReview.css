@@ -5,7 +5,8 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   max-width: 50%;
-  margin: auto;
+  margin-top: 50px;
+  margin-left: 300px;
 }
 .game-review h1 {
   font-size: 24px;
