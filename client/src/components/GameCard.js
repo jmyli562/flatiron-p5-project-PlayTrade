@@ -1,4 +1,5 @@
 import React from "react";
+import StarRating from "./StarRating";
 import "../components/css/GameCard.css";
 function GameCard({ title, image, releaseDate, rating }) {
   return (
@@ -6,7 +7,8 @@ function GameCard({ title, image, releaseDate, rating }) {
       <img src={image} alt={title} className="game-card-image"></img>
       <h3 className="game-card-title">{title}</h3>
       <span>Released:{releaseDate}</span>
-      <p>Rating: {rating}</p>
+      <StarRating rating={rating}></StarRating>
+      <br></br>
       <button className="game-card-button">Buy now</button>
     </div>
   );

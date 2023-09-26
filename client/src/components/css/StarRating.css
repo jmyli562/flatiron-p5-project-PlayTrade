@@ -1,0 +1,16 @@
+.star-rating {
+  display: inline-block;
+}
+
+.half-star,
+.filled-star {
+  color: #eeea00;
+  font-size: 18px;
+  margin-right: 2px;
+}
+
+.empty-star {
+  color: #000000;
+  font-size: 18px;
+  margin-right: 2px;
+}
