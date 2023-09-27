@@ -18,7 +18,7 @@ function StarRating({ rating }) {
   }
 
   //if there exists a half star append it
-  if (i == 0.5) {
+  if (i === 0.5) {
     stars.push(
       <FontAwesomeIcon
         icon={faStarHalfAlt}

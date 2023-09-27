@@ -90,7 +90,7 @@ function App() {
       </Switch>
       <Switch>
         <Route exact path="/game/:game/review">
-          <GameReview game={selectedGame} />
+          <GameReview currUser={currUser} game={selectedGame} />
         </Route>
       </Switch>
     </div>

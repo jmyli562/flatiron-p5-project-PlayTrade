@@ -5,8 +5,7 @@ import { useFormik } from "formik";
 //be sure to include back button to redirect back to /games
 //background image will be the game image
 //if the user is not logged in currently, do not allow to create a review, check isLoggedIn state
-function GameReview({ game }) {
-  //console.log(game);
+function GameReview({ currUser, game }) {
   const formik = useFormik({
     initialValues: {
       rating: 0,
@@ -23,6 +22,21 @@ function GameReview({ game }) {
 
       return errors;
     },
+    onSubmit: (values, { resetForm }) => {
+      values.user_id = currUser.id;
+      values.game_id = game.id;
+      fetch("/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then((resp) => {
+        if (resp.ok) {
+          resetForm({ values: "" });
+        }
+      });
+    },
   });
   return (
     <div className="game-review">
@@ -31,7 +45,7 @@ function GameReview({ game }) {
         className="background-image"
         style={{ backgroundImage: `url("${game.image_url}")` }}
       ></div>
-      <form>
+      <form onSubmit={formik.handleSubmit}>
         <div className="rating">
           <label>Rating:</label>
           <input

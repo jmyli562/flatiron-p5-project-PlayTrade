@@ -41,7 +41,7 @@ function GameList({ allgames }) {
         </select>
       </div>
       <div className="game-grid">
-        {filteredGames.length == 0 ? (
+        {filteredGames.length === 0 ? (
           <p style={{ textAlign: "center", fontWeight: "bold" }}>
             No games were found. Try again.
           </p>
