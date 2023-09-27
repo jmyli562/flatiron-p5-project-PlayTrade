@@ -7,9 +7,23 @@ import { useHistory } from "react-router-dom";
 //be sure to include back button to redirect back to /games
 //background image will be the game image
 //if the user is not logged in currently, do not allow to create a review, check isLoggedIn state
-function GameReview({ currUser, game }) {
+function GameReview({ allGames, setAllGames, currUser, game }) {
   const history = useHistory();
   const { setCurrUser, setSelectedGame, isLoggedIn } = useContext(AppContext);
+  function updateGameReview(review) {
+    const updatedgames = allGames.map((game) => {
+      if (game.id === review.game_id) {
+        const updatedGame = {
+          ...game,
+          reviews: [...game.reviews, review],
+        };
+        return updatedGame;
+      } else {
+        return game;
+      }
+    });
+    setAllGames(updatedgames);
+  }
   function updatePoints() {
     let num_points = currUser.points + 10;
     currUser.points = num_points;
@@ -23,9 +37,7 @@ function GameReview({ currUser, game }) {
       body: JSON.stringify({
         points: currUser.points,
       }),
-    })
-      .then((r) => r.json())
-      .then((user) => console.log(user));
+    });
   }
   const formik = useFormik({
     initialValues: {
@@ -56,6 +68,8 @@ function GameReview({ currUser, game }) {
         .then((resp) => {
           if (resp.ok) {
             //update the points of the current user by 10
+            //update review state for the game
+            updateGameReview(values);
             updatePoints();
             resetForm({ values: "" });
             history.push("/games");

@@ -5,13 +5,12 @@ import { AppContext } from "../context/AppProvider";
 import "../components/css/GameCard.css";
 function GameCard({ game, title, image, releaseDate, rating, price }) {
   function checkIfReviewed(selectedGame) {
-    console.log(selectedGame);
     for (let i = 0; i < selectedGame.reviews.length; i++) {
-      if (selectedGame.reviews[i].user_id == currUser.id) {
-        setSelectedGame({});
+      if (selectedGame.reviews[i].user_id === currUser.id) {
+        //setSelectedGame({});
         return true;
       } else {
-        selectedGame({});
+        //selectedGame({});
         return false;
       }
     }
@@ -41,11 +40,10 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
         <span
           className="game-card-span"
           onClick={() => {
-            console.log(currUser);
+            //console.log(currUser);
             setSelectedGame(game);
-            const reviewed = checkIfReviewed(game); // Use the correct object here (game)
+            const reviewed = checkIfReviewed(game);
 
-            // Use a ternary operator to set the path for redirection
             const path = reviewed
               ? `/game/${createSlugTitle(title)}/reviews`
               : `/game/${createSlugTitle(title)}/create-review`;
