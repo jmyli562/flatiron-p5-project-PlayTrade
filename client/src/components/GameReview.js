@@ -15,6 +15,17 @@ function GameReview({ currUser, game }) {
     currUser.points = num_points;
     setCurrUser({ ...currUser });
     //we need to update the users points on the backend
+    fetch(`/users/${currUser.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        points: currUser.points,
+      }),
+    })
+      .then((r) => r.json())
+      .then((user) => console.log(user));
   }
   const formik = useFormik({
     initialValues: {
