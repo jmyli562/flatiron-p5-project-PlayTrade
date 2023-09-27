@@ -20,6 +20,9 @@ function NavBar() {
       <div className="logo">
         <Link to="/">PlayTrade</Link>
       </div>
+      {isLoggedIn ? (
+        <ul className="points-balance">Balance: {currUser.points} points</ul>
+      ) : null}
       <div className="menu-toggle">
         <span className="bar"></span>
         <span className="bar"></span>

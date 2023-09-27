@@ -7,6 +7,13 @@
   align-items: center;
 }
 
+.points-balance {
+  margin-right: 500px;
+  text-decoration: none;
+  color: #a77121;
+  font-weight: bold;
+}
+
 .logo a {
   text-decoration: none;
   color: #fff;

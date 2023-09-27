@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { withRouter, Switch, Route, useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import Register from "./Register";
+import ReviewList from "./ReviewList";
 import Login from "./Login";
 import Home from "./Home";
 import NavBar from "./NavBar";
@@ -88,8 +89,13 @@ function App() {
         </Route>
       </Switch>
       <Switch>
-        <Route exact path="/game/:game/review">
+        <Route exact path="/game/:game/create-review">
           <GameReview currUser={currUser} game={selectedGame} />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path="/game/:game/reviews">
+          <ReviewList></ReviewList>
         </Route>
       </Switch>
     </div>
