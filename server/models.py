@@ -30,6 +30,7 @@ class User(db.Model, SerializerMixin):
     serialize_rules = (
         "-review",
         "-comment",
+        "-_password_hash",
     )
 
     @hybrid_property  # restrict access to the password hash
@@ -87,9 +88,9 @@ class Game(db.Model, SerializerMixin):
     owners = db.relationship(
         "User", secondary=game_library, back_populates="library", lazy="dynamic"
     )
-    reviews = db.relationship("Review", backref="game")
+    reviews = db.relationship("Review", backref="game", lazy="select")
 
-    serialize_rules = ("-owners", "-reviews")
+    serialize_rules = ("-owners",)
 
 
 class Review(db.Model, SerializerMixin):
@@ -102,4 +103,4 @@ class Review(db.Model, SerializerMixin):
     game_id = db.Column(db.Integer, db.ForeignKey("games.id"))
     comment = db.relationship("Comment", backref="review")
 
-    serialize_rules = ("-comment",)
+    serialize_rules = ("-comment", "-user", "-game")

@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../components/css/GameReview.css";
 import { useFormik } from "formik";
+import { AppContext } from "../context/AppProvider";
+import { useHistory } from "react-router-dom";
 //if the game does not have a review.... the title will be Leave a Review for {game}
 //be sure to include back button to redirect back to /games
 //background image will be the game image
 //if the user is not logged in currently, do not allow to create a review, check isLoggedIn state
 function GameReview({ currUser, game }) {
+  const history = useHistory();
+  const { setCurrUser, setSelectedGame, isLoggedIn } = useContext(AppContext);
+  function updatePoints() {
+    let num_points = currUser.points + 10;
+    currUser.points = num_points;
+    setCurrUser({ ...currUser });
+    //we need to update the users points on the backend
+  }
   const formik = useFormik({
     initialValues: {
       rating: 0,
@@ -25,19 +35,29 @@ function GameReview({ currUser, game }) {
     onSubmit: (values, { resetForm }) => {
       values.user_id = currUser.id;
       values.game_id = game.id;
-      /*
       fetch("/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
-      }).then((resp) => {
-        if (resp.ok) {
-          resetForm({ values: "" });
-        }
-      });
-      */
+      })
+        .then((resp) => {
+          if (resp.ok) {
+            //update the points of the current user by 10
+            updatePoints();
+            resetForm({ values: "" });
+            history.push("/games");
+          } else {
+            resp.text().then((errorMessage) => {
+              console.log("Error message from server:", errorMessage);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+          // Handle network errors or other issues
+        });
     },
   });
   return (
@@ -79,7 +99,7 @@ function GameReview({ currUser, game }) {
             <div className="error">{formik.errors.content}</div>
           ) : null}
         </div>
-        <button className="review-button" type="submit">
+        <button type="submit" className="review-button">
           Submit
         </button>
       </form>

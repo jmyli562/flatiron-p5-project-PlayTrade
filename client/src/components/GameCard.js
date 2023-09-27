@@ -32,7 +32,9 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
             history.push(`/game/${createSlugTitle(title)}/review`);
           }}
         >
-          Leave a Review
+          {game.reviews.length === 0
+            ? "Leave a Review"
+            : `Reviews (${game.reviews.length})`}
         </span>
       )}
       <br></br>
