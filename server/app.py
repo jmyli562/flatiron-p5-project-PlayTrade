@@ -6,6 +6,7 @@
 from flask import request, session, make_response, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError, DataError
+from sqlalchemy.orm import subqueryload, load_only
 
 # Local imports
 from config import app, db, api
@@ -111,9 +112,11 @@ api.add_resource(Logout, "/logout")
 
 class Games(Resource):
     def get(self):
-        games = [game.to_dict() for game in Game.query.all()]
+        games = Game.query.all()
 
-        return make_response(games, 201)
+        serialized_games = [game.to_dict() for game in games]
+
+        return make_response(serialized_games, 201)
 
     def post(self):
         data = request.get_json()
@@ -159,7 +162,7 @@ class GameLibrary(Resource):
 api.add_resource(GameLibrary, "/<int:id>/library")
 
 
-class Comment(Resource):
+class Comments(Resource):
     def get(self, id):
         pass
 
@@ -173,7 +176,50 @@ class Comment(Resource):
         pass
 
 
-api.add_resource(Comment, "/comments")
+api.add_resource(Comments, "/comments")
+
+
+class Reviews(Resource):
+    def get(self):
+        reviews = Review.query.all()
+
+        serialized_reviews = [review.to_dict() for review in reviews]
+
+        return make_response(serialized_reviews, 201)
+
+    def post(self):
+        data = request.get_json()
+
+        rating = data["rating"]
+        content = data["content"]
+        user_id = data["user_id"]
+        game_id = data["game_id"]
+
+        review = Review(
+            content=content, rating=rating, user_id=user_id, game_id=game_id
+        )
+
+        try:
+            db.session.add(review)
+            db.session.commit()
+            return review.to_dict(), 201
+        except IntegrityError as e:
+            errors = []
+
+            if isinstance(e, (IntegrityError, DataError)):
+                for error in e.orig.args:
+                    errors.append(str(error))
+
+            return {"errors": errors}, 422
+
+    def patch(self):
+        pass
+
+    def delete(self):
+        pass
+
+
+api.add_resource(Reviews, "/reviews")
 
 
 @app.route("/")

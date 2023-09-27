@@ -15,9 +15,8 @@ if __name__ == "__main__":
     with app.app_context():
         print("Starting seed...")
         # Seed code goes here!
-        User.query.delete()
-        Game.query.delete()
+        # User.query.delete()
         Review.query.delete()
-        Comment.query.delete()
+        # Comment.query.delete()
 
         db.session.commit()

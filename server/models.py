@@ -27,6 +27,11 @@ class User(db.Model, SerializerMixin):
     points = db.Column(db.Integer)
     _password_hash = db.Column(db.String)
 
+    serialize_rules = (
+        "-review",
+        "-comment",
+    )
+
     @hybrid_property  # restrict access to the password hash
     def password_hash(self):
         raise Exception("Hashed password may not be viewed.")
@@ -84,6 +89,8 @@ class Game(db.Model, SerializerMixin):
     )
     reviews = db.relationship("Review", backref="game")
 
+    serialize_rules = ("-owners", "-reviews")
+
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = "reviews"
@@ -94,3 +101,5 @@ class Review(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     game_id = db.Column(db.Integer, db.ForeignKey("games.id"))
     comment = db.relationship("Comment", backref="review")
+
+    serialize_rules = ("-comment",)
