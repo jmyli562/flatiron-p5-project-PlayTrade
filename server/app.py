@@ -34,7 +34,19 @@ class UserByID(Resource):
 
     # will be used to update the attributes of the user in the database (points)
     def patch(self, id):
-        pass
+        user = User.query.filter(User.id == id).first()
+
+        for attr in request.get_json():
+            setattr(user, attr, request.get_json().get(attr))
+
+        db.session.add(user)
+        db.session.commit()
+
+        user_dict = user.to_dict()
+
+        response = make_response(user_dict, 200)
+
+        return response
 
 
 api.add_resource(UserByID, "/users/<int:id>")

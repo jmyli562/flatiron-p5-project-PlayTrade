@@ -27,11 +27,7 @@ class User(db.Model, SerializerMixin):
     points = db.Column(db.Integer)
     _password_hash = db.Column(db.String)
 
-    serialize_rules = (
-        "-review",
-        "-comment",
-        "-_password_hash",
-    )
+    serialize_rules = ("-_password_hash",)
 
     @hybrid_property  # restrict access to the password hash
     def password_hash(self):
