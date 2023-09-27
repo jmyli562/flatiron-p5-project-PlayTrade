@@ -48,10 +48,6 @@ input[type="number"] {
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
 .background-image {
   position: absolute;
   top: 0;

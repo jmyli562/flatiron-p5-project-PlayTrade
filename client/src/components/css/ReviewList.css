@@ -62,7 +62,3 @@
   cursor: pointer;
   margin-left: 10px;
 }
-
-.comment-input button:hover {
-  background-color: #0056b3;
-}
