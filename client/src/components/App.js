@@ -35,7 +35,6 @@ function App() {
         );
       }
     });
-
     async function getFeaturedGames() {
       await fetch(
         `https://rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}&page=1&page_size=10`

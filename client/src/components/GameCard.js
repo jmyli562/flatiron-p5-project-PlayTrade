@@ -4,9 +4,8 @@ import StarRating from "./StarRating";
 import { AppContext } from "../context/AppProvider";
 import "../components/css/GameCard.css";
 function GameCard({ game, title, image, releaseDate, rating, price }) {
-  //console.log(game);
   const history = useHistory();
-  const { setSelectedGame } = useContext(AppContext);
+  const { setSelectedGame, isLoggedIn } = useContext(AppContext);
   function createSlugTitle(title) {
     return title
       .toLowerCase()
@@ -15,7 +14,9 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
   }
   return (
     <div className="game-card">
-      <span className="game-card-price">Cost: {price} points</span>
+      {game.hasOwnProperty("background_image") ? null : (
+        <span className="game-card-price">Cost: {price} points</span>
+      )}
       <img src={image} alt={title} className="game-card-image"></img>
       <h3 className="game-card-title">{title}</h3>
       <span>Released: {releaseDate}</span>
@@ -23,18 +24,26 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
       {/*reminder to add conditional rendering: if a game has no reviews: render "leave a review"*/}
       {/*/ when user clicks takes them to /game_name/add_review*/}
       {/*if the game already has a review, show See Reviews (1) <- number of reviews and take user to page to leave a comment on the review */}
-      <span
-        className="game-card-span"
-        onClick={() => {
-          setSelectedGame(game);
-          history.push(`/game/${createSlugTitle(title)}/review`);
-        }}
-      >
-        Leave a Review
-      </span>
+      {game.hasOwnProperty("background_image") || !isLoggedIn ? null : (
+        <span
+          className="game-card-span"
+          onClick={() => {
+            setSelectedGame(game);
+            history.push(`/game/${createSlugTitle(title)}/review`);
+          }}
+        >
+          Leave a Review
+        </span>
+      )}
       <br></br>
       {/*if the user is not logged in gray out the add game to cart button and disable clicking */}
-      <button className="game-card-button">Add Game to Cart 🛒</button>
+      <button
+        className="game-card-button"
+        disabled={isLoggedIn ? false : true}
+        style={{ backgroundColor: isLoggedIn ? "" : "gray" }}
+      >
+        Add Game to Cart 🛒
+      </button>
     </div>
   );
 }

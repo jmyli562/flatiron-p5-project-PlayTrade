@@ -25,6 +25,7 @@ function GameReview({ currUser, game }) {
     onSubmit: (values, { resetForm }) => {
       values.user_id = currUser.id;
       values.game_id = game.id;
+      /*
       fetch("/reviews", {
         method: "POST",
         headers: {
@@ -36,6 +37,7 @@ function GameReview({ currUser, game }) {
           resetForm({ values: "" });
         }
       });
+      */
     },
   });
   return (
