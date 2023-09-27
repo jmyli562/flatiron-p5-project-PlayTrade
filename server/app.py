@@ -30,7 +30,13 @@ api.add_resource(Users, "/users")
 
 class UserByID(Resource):
     def get(self, id):
-        pass
+        try:
+            user = User.query.filter(User.id == id).first()
+
+            return user.to_dict(), 200
+
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     # will be used to update the attributes of the user in the database (points)
     def patch(self, id):
