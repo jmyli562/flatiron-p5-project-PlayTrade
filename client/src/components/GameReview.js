@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 //if the user is not logged in currently, do not allow to create a review, check isLoggedIn state
 function GameReview({ allGames, setAllGames, currUser, game }) {
   const history = useHistory();
-  const { setCurrUser, setSelectedGame, isLoggedIn } = useContext(AppContext);
+  const { setCurrUser } = useContext(AppContext);
   function updateGameReview(review) {
     const updatedgames = allGames.map((game) => {
       if (game.id === review.game_id) {

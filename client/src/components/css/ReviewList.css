@@ -1,0 +1,68 @@
+.review-list {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Styling for individual reviews */
+.review {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.review h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.review p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+/* Styling for comments */
+.comment {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.comment p {
+  font-size: 0.9rem;
+}
+
+/* Styling for the comment input field and button */
+.comment-input {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.comment-input input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.comment-input button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.comment-input button:hover {
+  background-color: #0056b3;
+}
