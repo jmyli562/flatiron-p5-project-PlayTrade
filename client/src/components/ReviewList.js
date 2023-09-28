@@ -4,8 +4,12 @@ import "../components/css/ReviewList.css";
 import CommentList from "./CommentList";
 import { AppContext } from "../context/AppProvider";
 import StarRating from "./StarRating";
-function ReviewList({ selectedGame }) {
-  console.log(selectedGame);
+function ReviewList({ selectedGame, allGames, setAllGames }) {
+  function handleEdit(reviewId, rating, content) {
+    setEditMode(() => !editMode);
+    setNewReviewContent(content);
+    setNewReviewRating(rating);
+  }
   function handleDelete(e) {
     //delete the comments on the backend...
     //update the review state and remove the review
@@ -31,6 +35,24 @@ function ReviewList({ selectedGame }) {
       .then(() => {
         // Update the selectedGame state with the modified game object
         setSelectedGame(updatedGame);
+        //we also need to update the state of allgames and update the state of the review at the specific game
+        const updatedGames = allGames.map((game) => {
+          // Check if the game has the review to be deleted
+          if (game.reviews.some((review) => review.id === review_id)) {
+            // Remove the deleted review from the game's reviews
+            const updatedReviews = game.reviews.filter(
+              (review) => review.id !== review_id
+            );
+            return {
+              ...game,
+              reviews: updatedReviews,
+            };
+          }
+          return game;
+        });
+
+        // Update the allGames state with the modified game list
+        setAllGames(updatedGames);
       })
       .catch((error) => {
         console.error("Error deleting review:", error);
@@ -62,19 +84,14 @@ function ReviewList({ selectedGame }) {
   }, [selectedGame]);
   const { setSelectedGame, createSlugTitle } = useContext(AppContext);
   const [comments, setComments] = useState([]);
+  const [editMode, setEditMode] = useState(false); //toggle for when the user wants to edit their review
+  const [newReviewRating, setNewReviewRating] = useState();
+  const [newReviewContent, setNewReviewContent] = useState("");
   const [commentContent, setCommentContent] = useState(
     new Array(selectedGame.reviews.length).fill("")
   );
   const { currUser } = useContext(AppContext);
   const history = useHistory();
-  const buttons = (
-    <div className="review-actions">
-      <button className="update-review-button">Update Review</button>
-      <button className="delete-review-button" onClick={(e) => handleDelete(e)}>
-        Delete Review
-      </button>
-    </div>
-  );
   function handleSubmit(index, review_id) {
     const commentContents = commentContent[index];
 
@@ -126,11 +143,62 @@ function ReviewList({ selectedGame }) {
   }
   const reviews = selectedGame.reviews.map((review, index) => (
     <div key={review.id} className="review" id={review.id}>
-      <p>Reviewer:{review.user.username}</p>
-      <p>Date posted:{review.date_created}</p>
-      <StarRating rating={review.rating}></StarRating>
-      <p>{review.content}</p>
-      {currUser.id === review.user.id ? buttons : null}
+      {/*toggling between showing the review or the edit review view*/}
+      {editMode ? (
+        <>
+          <h1>Editing Your Review</h1>
+          <label>Rating:</label>
+          <input
+            type="number"
+            step="0.5"
+            min="0"
+            max="5"
+            className="review-rating-input"
+            value={newReviewRating}
+            onChange={(e) => setNewReviewRating(e.target.value)}
+          />
+          <label>Content:</label>
+          <textarea
+            className="review-content-textarea"
+            value={newReviewContent}
+            onChange={(e) => setNewReviewContent(e.target.value)}
+          />
+          <button className="review-save-changes">Save Changes</button>
+          <button
+            className="cancel-review-edit"
+            onClick={() => setEditMode(!editMode)}
+          >
+            Cancel
+          </button>
+        </>
+      ) : (
+        <>
+          <p>Reviewer:{review.user.username}</p>
+          <p>Date posted:{review.date_created}</p>
+          <StarRating rating={review.rating}></StarRating>
+          <p>{review.content}</p>
+          {currUser.id === review.user.id ? (
+            <>
+              <div className="review-actions">
+                <button
+                  className="update-review-button"
+                  onClick={() =>
+                    handleEdit(review.id, review.rating, review.content)
+                  }
+                >
+                  Update Review
+                </button>
+                <button
+                  className="delete-review-button"
+                  onClick={(e) => handleDelete(e)}
+                >
+                  Delete Review
+                </button>
+              </div>
+            </>
+          ) : null}
+        </>
+      )}
       <hr></hr>
       <br></br>
       <h3>Comments:</h3>

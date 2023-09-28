@@ -100,7 +100,11 @@ function App() {
       </Switch>
       <Switch>
         <Route exact path="/game/:game/reviews">
-          <ReviewList selectedGame={selectedGame} />
+          <ReviewList
+            selectedGame={selectedGame}
+            allGames={allGames}
+            setAllGames={setAllGames}
+          />
         </Route>
       </Switch>
     </div>
