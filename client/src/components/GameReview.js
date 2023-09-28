@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 //if the user is not logged in currently, do not allow to create a review, check isLoggedIn state
 function GameReview({ allGames, setAllGames, currUser, game }) {
   const history = useHistory();
-  const { setCurrUser } = useContext(AppContext);
+  const { setCurrUser, selectedGame, setSelectedGame } = useContext(AppContext);
   function updateGameReview(review) {
     const updatedgames = allGames.map((game) => {
       if (game.id === review.game_id) {
@@ -72,7 +72,8 @@ function GameReview({ allGames, setAllGames, currUser, game }) {
             updateGameReview(values);
             updatePoints();
             resetForm({ values: "" });
-            history.push("/games");
+            history.push("/games/");
+            window.location.reload(false);
           } else {
             resp.text().then((errorMessage) => {
               console.log("Error message from server:", errorMessage);
