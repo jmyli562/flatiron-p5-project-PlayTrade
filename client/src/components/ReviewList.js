@@ -1,10 +1,41 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../components/css/ReviewList.css";
-import ReviewComment from "./ReviewComment";
+import CommentList from "./CommentList";
 import { AppContext } from "../context/AppProvider";
 import StarRating from "./StarRating";
 function ReviewList({ selectedGame }) {
+  function handleDelete(e) {
+    //delete the comments on the backend...
+    //update the review state and remove the review
+    ////the user should only be able to modify their reviews if they are logged in, and the review is their review
+
+    //extracting the review id
+    let review_id = parseInt(e.target.parentNode.parentNode.id);
+    //we want an array that doesn't have the review that we want to delete, so we can update state with it
+    const updatedGame = { ...selectedGame }; //making a copy of the selectedGame
+    updatedGame.reviews = updatedGame.reviews.filter(
+      (review) => review.id !== review_id
+    );
+    fetch(`/reviews/${review_id}`, {
+      method: "DELETE",
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("Failed to delete review");
+        }
+      })
+      .then(() => {
+        // Update the selectedGame state with the modified game object
+        setSelectedGame(updatedGame);
+      })
+      .catch((error) => {
+        console.error("Error deleting review:", error);
+        // Handle any errors here
+      });
+  }
   useEffect(() => {
     fetch("/comments")
       .then((resp) => resp.json())
@@ -38,7 +69,9 @@ function ReviewList({ selectedGame }) {
   const buttons = (
     <div className="review-actions">
       <button className="update-review-button">Update Review</button>
-      <button className="delete-review-button">Delete Review</button>
+      <button className="delete-review-button" onClick={(e) => handleDelete(e)}>
+        Delete Review
+      </button>
     </div>
   );
   function handleSubmit(index, review_id) {
@@ -91,7 +124,7 @@ function ReviewList({ selectedGame }) {
       });
   }
   const reviews = selectedGame.reviews.map((review, index) => (
-    <div key={review.id} className="review">
+    <div key={review.id} className="review" id={review.id}>
       <p>Reviewer:{review.user.username}</p>
       <p>Date posted:{review.date_created}</p>
       <StarRating rating={review.rating}></StarRating>
@@ -100,14 +133,7 @@ function ReviewList({ selectedGame }) {
       <hr></hr>
       <br></br>
       <h3>Comments:</h3>
-      {comments[review.id] &&
-        comments[review.id].map((comment, commentIndex) => (
-          <div key={commentIndex} className="comment">
-            <p>Comment left by: {currUser.username}</p>
-            <p>Date posted: {comment.posted_at}</p>
-            <p>{comment.content}</p>
-          </div>
-        ))}
+      {comments[review.id] && <CommentList comments={comments[review.id]} />}
       <div className="comment-input">
         <input
           type="text"
