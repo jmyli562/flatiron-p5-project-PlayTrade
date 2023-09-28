@@ -1,22 +1,49 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../components/css/ReviewList.css";
+import ReviewComment from "./ReviewComment";
 import { AppContext } from "../context/AppProvider";
 import StarRating from "./StarRating";
 function ReviewList({ selectedGame }) {
+  const [comments, setComments] = useState([]);
+  const [commentContent, setCommentContent] = useState(
+    new Array(selectedGame.reviews.length).fill("")
+  );
   const { currUser } = useContext(AppContext);
-  console.log(selectedGame);
+  function handleSubmit(index) {
+    const commentContents = commentContent[index];
+    console.log(`Comment for review at index ${index}: ${commentContents}`);
+  }
   const history = useHistory();
-  const reviews = selectedGame.reviews.map((review) => (
+  const buttons = (
+    <div className="review-actions">
+      <button className="update-review-button">Update Review</button>
+      <button className="delete-review-button">Delete Review</button>
+    </div>
+  );
+  const reviews = selectedGame.reviews.map((review, index) => (
     <div key={review.id} className="review">
       <p>Reviewer:{review.user.username}</p>
       <p>Date posted:{review.date_created}</p>
       <StarRating rating={review.rating}></StarRating>
       <p>{review.content}</p>
-      {currUser.id === review.user.id ? <a href="/">Update Review</a> : null}
+      {currUser.id === review.user.id ? buttons : null}
+      <hr></hr>
+      <br></br>
+      <h3>Comments:</h3>
       <div className="comment-input">
-        <input type="text" placeholder="Add a comment..." />
-        <button>Add Comment</button>
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          value={commentContent[index]}
+          onChange={(e) => {
+            const newCommentContents = [...commentContent];
+            newCommentContents[index] = e.target.value;
+            setCommentContent(newCommentContents);
+          }}
+        />
+        <button onClick={handleSubmit(index)}>Add Comment</button>
+        <br></br>
       </div>
       <br></br>
     </div>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../components/css/NavBar.css";
 import { AppContext } from "../context/AppProvider";
 function NavBar() {
@@ -10,11 +10,13 @@ function NavBar() {
       if (resp.ok) {
         setCurrUser({});
         setLoggedIn(() => !isLoggedIn);
+        history.push("/home");
       }
     });
   }
   const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
     useContext(AppContext);
+  const history = useHistory();
   return (
     <nav className="navbar">
       <div className="logo">

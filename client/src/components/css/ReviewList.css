@@ -12,6 +12,8 @@
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
+  position: relative;
+  padding: 20px;
 }
 
 .review h3 {
@@ -61,4 +63,36 @@
   font-size: 0.9rem;
   cursor: pointer;
   margin-left: 10px;
+}
+
+.review-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.update-review-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.delete-review-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 150px;
 }
