@@ -67,10 +67,16 @@ class Comment(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)
-    posted_at = db.Column(db.Date)
-    updated_at = db.Column(db.Date)
+    posted_at = db.Column(db.DateTime, default=datetime.utcnow)
     review_id = db.Column(db.Integer, db.ForeignKey("reviews.id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    serialize_rules = (
+        "-review",
+        "-user.library",
+        "-user.review",
+        "-user.comment",
+    )
 
 
 class Game(db.Model, SerializerMixin):
@@ -103,7 +109,6 @@ class Review(db.Model, SerializerMixin):
     date_updated = db.Column(db.DateTime, default=None, nullable=True)
 
     serialize_rules = (
-        "-comment",
         "-user.library",
         "-user.review",
         "-user.comment",

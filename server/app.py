@@ -181,14 +181,32 @@ api.add_resource(GameLibrary, "/<int:id>/library")
 
 
 class Comments(Resource):
-    def get(self, id):
-        pass
+    def get(self):
+        comment = [comment.to_dict() for comment in Comment.query.all()]
 
-    def post(self, id):
-        pass
+        return make_response(comment, 201)
 
-    def patch(self, id):
-        pass
+    def post(self):
+        data = request.get_json()
+
+        new_comment = Comment(
+            content=data["content"],
+            review_id=data["review_id"],
+            user_id=data["user_id"],
+        )
+
+        try:
+            db.session.add(new_comment)
+            db.session.commit()
+            return new_comment.to_dict(), 201
+        except IntegrityError as e:
+            errors = []
+
+            if isinstance(e, (IntegrityError, DataError)):
+                for error in e.orig.args:
+                    errors.append(str(error))
+
+            return {"errors": errors}, 422
 
     def delete(self, id):
         pass
@@ -243,12 +261,25 @@ api.add_resource(Reviews, "/reviews")
 class ReviewByID(Resource):
     def get(self, id):
         try:
-            review = Review.query.filter(Review.user_id == id).first()
+            reviews = Review.query.filter(Review.game_id == id).all()
+            reviews_list = [review.to_dict() for review in reviews]
 
-            return review.to_dict(), 200
+            return reviews_list, 200
 
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+
+    def delete(self, id):
+        review_to_delete = Review.query.filter(Review.id == id).first()
+
+        db.session.delete(review_to_delete)
+        db.session.commit()
+
+        response_body = {"delete_successful": True, "message": "Review deleted"}
+
+        response = make_response(response_body, 200)
+
+        return response
 
 
 api.add_resource(ReviewByID, "/reviews/<int:id>")
