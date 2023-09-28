@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from config import db, bcrypt
@@ -93,10 +94,18 @@ class Review(db.Model, SerializerMixin):
     __tablename__ = "reviews"
 
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String)
-    rating = db.Column(db.Integer)
+    content = db.Column(db.String, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     game_id = db.Column(db.Integer, db.ForeignKey("games.id"))
     comment = db.relationship("Comment", backref="review")
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_updated = db.Column(db.DateTime, default=None, nullable=True)
 
-    serialize_rules = ("-comment", "-user", "-game")
+    serialize_rules = (
+        "-comment",
+        "-user.library",
+        "-user.review",
+        "-user.comment",
+        "-game",
+    )

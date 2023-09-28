@@ -240,6 +240,20 @@ class Reviews(Resource):
 api.add_resource(Reviews, "/reviews")
 
 
+class ReviewByID(Resource):
+    def get(self, id):
+        try:
+            review = Review.query.filter(Review.user_id == id).first()
+
+            return review.to_dict(), 200
+
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+
+api.add_resource(ReviewByID, "/reviews/<int:id>")
+
+
 @app.route("/")
 def index():
     return "<h1>Project Server</h1>"
