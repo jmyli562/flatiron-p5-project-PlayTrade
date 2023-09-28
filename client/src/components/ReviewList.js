@@ -5,6 +5,7 @@ import CommentList from "./CommentList";
 import { AppContext } from "../context/AppProvider";
 import StarRating from "./StarRating";
 function ReviewList({ selectedGame }) {
+  console.log(selectedGame);
   function handleDelete(e) {
     //delete the comments on the backend...
     //update the review state and remove the review
@@ -59,7 +60,7 @@ function ReviewList({ selectedGame }) {
         setComments(commentsByReview);
       });
   }, [selectedGame]);
-  const { setSelectedGame } = useContext(AppContext);
+  const { setSelectedGame, createSlugTitle } = useContext(AppContext);
   const [comments, setComments] = useState([]);
   const [commentContent, setCommentContent] = useState(
     new Array(selectedGame.reviews.length).fill("")
@@ -104,7 +105,7 @@ function ReviewList({ selectedGame }) {
           if (review.id === review_id) {
             return {
               ...review,
-              comments: [...(review.comments || []), comment],
+              comment: [...(review.comments || []), comment],
             };
           } else {
             return review;
@@ -165,10 +166,7 @@ function ReviewList({ selectedGame }) {
           <button
             onClick={() =>
               history.push(
-                `/game/${selectedGame.name
-                  .toLowerCase()
-                  .trim()
-                  .replace(/[^a-z0-9]+/g, "-")}/create-review`
+                `/game/${createSlugTitle(selectedGame.name)}/create-review`
               )
             }
           >
@@ -184,10 +182,7 @@ function ReviewList({ selectedGame }) {
             <button
               onClick={() =>
                 history.push(
-                  `/game/${selectedGame.name
-                    .toLowerCase()
-                    .trim()
-                    .replace(/[^a-z0-9]+/g, "-")}/create-review`
+                  `/game/${createSlugTitle(selectedGame.name)}/create-review`
                 )
               }
             >

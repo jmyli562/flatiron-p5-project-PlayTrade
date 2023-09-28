@@ -67,18 +67,20 @@ function GameReview({ allGames, setAllGames, currUser, game }) {
       })
         .then((resp) => {
           if (resp.ok) {
-            //update the points of the current user by 10
-            //update review state for the game
-            updateGameReview(values);
-            updatePoints();
-            resetForm({ values: "" });
-            history.push("/games/");
-            window.location.reload(false);
+            return resp.json();
           } else {
             resp.text().then((errorMessage) => {
               console.log("Error message from server:", errorMessage);
             });
           }
+        })
+        .then((review) => {
+          //update the points of the current user by 10
+          //update review state for the game
+          updateGameReview(review);
+          updatePoints();
+          history.push("/games");
+          resetForm({ values: "" });
         })
         .catch((error) => {
           console.error("Fetch error:", error);

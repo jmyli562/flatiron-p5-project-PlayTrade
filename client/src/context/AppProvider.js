@@ -3,6 +3,12 @@ import { createContext, useState } from "react";
 export const AppContext = createContext();
 
 function AppProvider({ children }) {
+  function createSlugTitle(title) {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-");
+  }
   const [currUser, setCurrUser] = useState({
     username: "",
     email: "",
@@ -20,6 +26,7 @@ function AppProvider({ children }) {
     setLoggedIn,
     selectedGame,
     setSelectedGame,
+    createSlugTitle,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

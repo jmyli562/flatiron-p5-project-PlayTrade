@@ -5,14 +5,8 @@ import { AppContext } from "../context/AppProvider";
 import "../components/css/GameCard.css";
 function GameCard({ game, title, image, releaseDate, rating, price }) {
   const history = useHistory();
-  const { currUser, selectedGame, setSelectedGame, isLoggedIn } =
+  const { setSelectedGame, isLoggedIn, createSlugTitle } =
     useContext(AppContext);
-  function createSlugTitle(title) {
-    return title
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, "-");
-  }
   return (
     <div className="game-card">
       {game.hasOwnProperty("background_image") ? null : (
@@ -30,10 +24,7 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
           className="game-card-span"
           onClick={() => {
             setSelectedGame(game);
-
-            const path = `/game/${createSlugTitle(title)}/reviews`;
-
-            history.push(path);
+            history.push(`/game/${createSlugTitle(title)}/reviews`);
           }}
         >
           {game.reviews.length === 0
