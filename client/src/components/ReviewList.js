@@ -3,10 +3,34 @@ import { useHistory } from "react-router-dom";
 import "../components/css/ReviewList.css";
 import CommentList from "./CommentList";
 import { AppContext } from "../context/AppProvider";
+import { format } from "date-fns";
 import StarRating from "./StarRating";
 function ReviewList({ selectedGame, allGames, setAllGames }) {
+  function handleUpdateReview(e) {
+    e.preventDefault();
+    fetch(`/reviews/${reviewEditID}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: newReviewContent,
+        rating: newReviewRating,
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((patchedReview) => {
+        //update the state of the selectedGame and allGames
+        // Create a new array with the updated review replacing the old one
+        setReviewEditID(null);
+        setNewReviewContent("");
+        setNewReviewRating("");
+        setEditMode(() => !editMode);
+      });
+  }
   function handleEdit(reviewId, rating, content) {
     setEditMode(() => !editMode);
+    setReviewEditID(reviewId);
     setNewReviewContent(content);
     setNewReviewRating(rating);
   }
@@ -85,6 +109,7 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
   const { setSelectedGame, createSlugTitle } = useContext(AppContext);
   const [comments, setComments] = useState([]);
   const [editMode, setEditMode] = useState(false); //toggle for when the user wants to edit their review
+  const [reviewEditID, setReviewEditID] = useState(null);
   const [newReviewRating, setNewReviewRating] = useState();
   const [newReviewContent, setNewReviewContent] = useState("");
   const [commentContent, setCommentContent] = useState(
@@ -146,30 +171,43 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
       {/*toggling between showing the review or the edit review view*/}
       {editMode ? (
         <>
-          <h1>Editing Your Review</h1>
-          <label>Rating:</label>
-          <input
-            type="number"
-            step="0.5"
-            min="0"
-            max="5"
-            className="review-rating-input"
-            value={newReviewRating}
-            onChange={(e) => setNewReviewRating(e.target.value)}
-          />
-          <label>Content:</label>
-          <textarea
-            className="review-content-textarea"
-            value={newReviewContent}
-            onChange={(e) => setNewReviewContent(e.target.value)}
-          />
-          <button className="review-save-changes">Save Changes</button>
-          <button
-            className="cancel-review-edit"
-            onClick={() => setEditMode(!editMode)}
-          >
-            Cancel
-          </button>
+          <form onSubmit={(e) => handleUpdateReview(e)}>
+            <h3>Editing Your Review</h3>
+            <label>
+              Rating:
+              <input
+                type="number"
+                step="0.5"
+                min="0"
+                max="5"
+                className="review-rating-input"
+                value={newReviewRating}
+                onChange={(e) => setNewReviewRating(e.target.value)}
+              />
+            </label>
+            <label>Content:</label>
+            <textarea
+              className="review-content-textarea"
+              value={newReviewContent}
+              placeholder="Type new review here..."
+              onChange={(e) => setNewReviewContent(e.target.value)}
+            />
+            <div>
+              <button
+                className="review-save-changes"
+                type="submit"
+                value="submit"
+              >
+                Save Changes
+              </button>
+              <button
+                className="cancel-review-edit"
+                onClick={() => setEditMode(!editMode)}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </>
       ) : (
         <>

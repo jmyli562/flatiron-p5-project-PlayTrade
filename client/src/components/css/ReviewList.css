@@ -124,6 +124,7 @@ textarea {
   font-size: 16px;
   transition: background-color 0.3s ease;
   margin-bottom: 10px;
+  max-width: fit-content;
 }
 
 .cancel-review-edit {
@@ -137,6 +138,7 @@ textarea {
   transition: background-color 0.3s ease;
   margin-bottom: 10px;
   margin-left: 5px;
+  max-width: fit-content;
 }
 
 .review h1 {
