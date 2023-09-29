@@ -19,6 +19,7 @@ function AppProvider({ children }) {
   });
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [selectedGame, setSelectedGame] = useState({});
+  const [shoppingCart, setShoppingCart] = useState([]);
   const value = {
     currUser,
     setCurrUser,
@@ -27,6 +28,8 @@ function AppProvider({ children }) {
     selectedGame,
     setSelectedGame,
     createSlugTitle,
+    shoppingCart,
+    setShoppingCart,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

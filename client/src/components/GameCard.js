@@ -4,8 +4,12 @@ import StarRating from "./StarRating";
 import { AppContext } from "../context/AppProvider";
 import "../components/css/GameCard.css";
 function GameCard({ game, title, image, releaseDate, rating, price }) {
+  function addGameToCart(game) {
+    setShoppingCart(game);
+    history.push("/cart");
+  }
   const history = useHistory();
-  const { setSelectedGame, isLoggedIn, createSlugTitle } =
+  const { setSelectedGame, isLoggedIn, createSlugTitle, setShoppingCart } =
     useContext(AppContext);
   return (
     <div className="game-card">
@@ -34,10 +38,13 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
       )}
       <br></br>
       {/*if the user is not logged in gray out the add game to cart button and disable clicking */}
+      {/*if the game is already in the cart, do not allow the user to add the game again... disable the button*/}
+      {/* */}
       <button
         className="game-card-button"
         disabled={isLoggedIn ? false : true}
         style={{ backgroundColor: isLoggedIn ? "" : "gray" }}
+        onClick={() => addGameToCart(game)}
       >
         Add Game to Cart 🛒
       </button>

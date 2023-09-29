@@ -6,6 +6,7 @@ import { AppContext } from "../context/AppProvider";
 import { format } from "date-fns";
 import StarRating from "./StarRating";
 function ReviewList({ selectedGame, allGames, setAllGames }) {
+  console.log(allGames);
   function handleUpdateReview(e) {
     e.preventDefault();
     fetch(`/reviews/${reviewEditID}`, {
@@ -22,6 +23,33 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
       .then((patchedReview) => {
         //update the state of the selectedGame and allGames
         // Create a new array with the updated review replacing the old one
+        const reviewIndex = selectedGame.reviews.findIndex(
+          (review) => review.id === patchedReview.id
+        );
+
+        if (reviewIndex !== -1) {
+          // Create a new array with the updated review replacing the old one
+          const updatedReviews = [...selectedGame.reviews];
+          updatedReviews[reviewIndex] = patchedReview;
+
+          // Update the selectedGame state with the updated reviews
+          setSelectedGame({
+            ...selectedGame,
+            reviews: updatedReviews,
+          });
+        }
+        const updatedgames = allGames.map((game) => {
+          if (game.id === patchedReview.game_id) {
+            const updatedGame = {
+              ...game,
+              reviews: [patchedReview],
+            };
+            return updatedGame;
+          } else {
+            return game;
+          }
+        });
+        setAllGames(updatedgames);
         setReviewEditID(null);
         setNewReviewContent("");
         setNewReviewRating("");

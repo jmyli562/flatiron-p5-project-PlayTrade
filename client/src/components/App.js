@@ -3,6 +3,7 @@ import { withRouter, Switch, Route, useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import Register from "./Register";
 import ReviewList from "./ReviewList";
+import ShoppingCart from "./ShoppingCart";
 import Login from "./Login";
 import Home from "./Home";
 import NavBar from "./NavBar";
@@ -105,6 +106,11 @@ function App() {
             allGames={allGames}
             setAllGames={setAllGames}
           />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path="/cart">
+          <ShoppingCart></ShoppingCart>
         </Route>
       </Switch>
     </div>
