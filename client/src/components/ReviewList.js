@@ -6,7 +6,6 @@ import { AppContext } from "../context/AppProvider";
 import { format } from "date-fns";
 import StarRating from "./StarRating";
 function ReviewList({ selectedGame, allGames, setAllGames }) {
-  console.log(allGames);
   function handleUpdateReview(e) {
     e.preventDefault();
     fetch(`/reviews/${reviewEditID}`, {

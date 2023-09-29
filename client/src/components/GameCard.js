@@ -3,14 +3,20 @@ import { useHistory } from "react-router-dom";
 import StarRating from "./StarRating";
 import { AppContext } from "../context/AppProvider";
 import "../components/css/GameCard.css";
+import ShoppingCart from "./ShoppingCart";
 function GameCard({ game, title, image, releaseDate, rating, price }) {
   function addGameToCart(game) {
-    setShoppingCart(game);
-    history.push("/cart");
+    setShoppingCart(() => [...shoppingCart, game]);
+    window.alert(`${game.name} has been added to your cart.`);
   }
   const history = useHistory();
-  const { setSelectedGame, isLoggedIn, createSlugTitle, setShoppingCart } =
-    useContext(AppContext);
+  const {
+    setSelectedGame,
+    isLoggedIn,
+    createSlugTitle,
+    shoppingCart,
+    setShoppingCart,
+  } = useContext(AppContext);
   return (
     <div className="game-card">
       {game.hasOwnProperty("background_image") ? null : (

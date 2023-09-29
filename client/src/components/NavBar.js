@@ -42,7 +42,7 @@ function NavBar() {
         </li>
         {isLoggedIn ? (
           <li className="nav-item">
-            <Link to="/cart">Shopping Cart</Link>
+            <Link to="/cart">Shopping Cart </Link>
           </li>
         ) : (
           <li className="nav-item">
