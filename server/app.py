@@ -7,6 +7,7 @@ from flask import request, session, make_response, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import subqueryload, load_only
+from datetime import datetime
 
 # Local imports
 from config import app, db, api
@@ -278,6 +279,23 @@ class ReviewByID(Resource):
         response_body = {"delete_successful": True, "message": "Review deleted"}
 
         response = make_response(response_body, 200)
+
+        return response
+
+    def patch(self, id):
+        review_to_patch = Review.query.filter(Review.id == id).first()
+
+        for attr in request.get_json():
+            setattr(review_to_patch, attr, request.get_json().get(attr))
+
+        review_to_patch.date_updated = datetime.utcnow()
+
+        db.session.add(review_to_patch)
+        db.session.commit()
+
+        review_dict = review_to_patch.to_dict()
+
+        response = make_response(review_dict, 200)
 
         return response
 
