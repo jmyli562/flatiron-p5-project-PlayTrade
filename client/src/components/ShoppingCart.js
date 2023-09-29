@@ -2,11 +2,21 @@ import React, { useContext } from "react";
 import { AppContext } from "../context/AppProvider";
 import "../components/css/ShoppingCart.css";
 function ShoppingCart() {
+  function handleRemove(game) {
+    //filter the shoppingCart array and remove the game
+    //update the shoppingCart state using setShoppingCart
+
+    const filteredCart = shoppingCart.filter((item) => {
+      return item.id !== game.id;
+    });
+    setShoppingCart(filteredCart);
+    window.alert("Item removed from cart.");
+  }
   const { currUser, shoppingCart, setShoppingCart } = useContext(AppContext);
   return (
     <div>
       <div className="shopping-cart">
-        <h1>Shopping Cart</h1>
+        <h1>Cart</h1>
         <hr></hr>
         {shoppingCart.map((item) => (
           <div className="cart-item" key={item.id}>
@@ -22,7 +32,12 @@ function ShoppingCart() {
                 </div>
                 <div className="price-delete-container">
                   <p>Cost: {item.price} points | </p>
-                  <button className="remove-game">Remove game</button>
+                  <button
+                    className="remove-game"
+                    onClick={() => handleRemove(item)}
+                  >
+                    Remove game
+                  </button>
                 </div>
               </div>
             </article>

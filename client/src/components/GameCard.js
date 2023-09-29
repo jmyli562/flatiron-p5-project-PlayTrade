@@ -6,8 +6,13 @@ import "../components/css/GameCard.css";
 import ShoppingCart from "./ShoppingCart";
 function GameCard({ game, title, image, releaseDate, rating, price }) {
   function addGameToCart(game) {
-    setShoppingCart(() => [...shoppingCart, game]);
-    window.alert(`${game.name} has been added to your cart.`);
+    //need to check if the game already exists in the cart
+    if (shoppingCart.includes(game)) {
+      window.alert("Game is already in your cart.");
+    } else {
+      setShoppingCart(() => [...shoppingCart, game]);
+      window.alert(`${game.name} has been added to your cart.`);
+    }
   }
   const history = useHistory();
   const {

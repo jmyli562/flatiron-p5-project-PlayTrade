@@ -14,7 +14,7 @@ function NavBar() {
       }
     });
   }
-  const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
+  const { currUser, setCurrUser, isLoggedIn, setLoggedIn, shoppingCart } =
     useContext(AppContext);
   const history = useHistory();
   return (
@@ -42,7 +42,10 @@ function NavBar() {
         </li>
         {isLoggedIn ? (
           <li className="nav-item">
-            <Link to="/cart">Shopping Cart </Link>
+            <Link to="/cart">
+              🛒 (
+              {shoppingCart.length >= 1 ? shoppingCart.length + "item" : null})
+            </Link>
           </li>
         ) : (
           <li className="nav-item">
