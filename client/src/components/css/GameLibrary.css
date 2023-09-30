@@ -1,9 +1,5 @@
 .library-container {
   position: absolute;
-  top: 50px;
-  left: 0;
-  bottom: 0;
-  right: 0;
   height: 100%;
   width: 100%;
   background-image: url("https://media.istockphoto.com/id/1140828326/vector/retro-neon-background-with-80s-styled-laser-grid-and-stars.jpg?s=612x612&w=0&k=20&c=wnw0f35ERwayC4TlDo_0sd25b1PHKS4G5ucFD5xTNFo=");

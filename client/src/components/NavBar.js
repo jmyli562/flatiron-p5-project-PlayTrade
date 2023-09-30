@@ -18,8 +18,9 @@ function NavBar() {
   const history = useHistory();
   return (
     <nav className="navbar">
-      <div className="logo">
+      <div className="navbar-logo">
         <Link to="/">PlayTrade</Link>
+        <img src="https://github.com/jmyli562/flatiron-p5-project-PlayTrade/assets/60550632/135821c8-47e1-4ab0-b8b2-8a1f2f31fea2"></img>
       </div>
       {isLoggedIn ? (
         <ul className="points-balance">Balance: {currUser.points} points</ul>
@@ -41,7 +42,7 @@ function NavBar() {
         </li>
         {isLoggedIn ? (
           <li className="nav-item">
-            {shoppingCart.length == 0 ? (
+            {shoppingCart.length === 0 ? (
               <Link to="/cart">Shopping Cart</Link>
             ) : (
               <Link to="/cart">Cart ({shoppingCart.length} items)</Link>
@@ -57,7 +58,10 @@ function NavBar() {
             <Link to="/profile" style={{ color: "#ff5722" }}>
               Welcome, {currUser.username}
             </Link>
-            <button style={{ textAlign: "center" }} onClick={handleLogout}>
+            <button
+              style={{ textAlign: "center", marginLeft: "70px" }}
+              onClick={handleLogout}
+            >
               Logout
             </button>
           </li>

@@ -1,10 +1,12 @@
 .modal {
   position: fixed;
   left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  top: 10;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://media.istockphoto.com/id/1140828326/vector/retro-neon-background-with-80s-styled-laser-grid-and-stars.jpg?s=612x612&w=0&k=20&c=wnw0f35ERwayC4TlDo_0sd25b1PHKS4G5ucFD5xTNFo=");
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,9 +21,8 @@
 }
 
 .modal-header,
-h4,
 .close {
-  background-color: rgb(35, 35, 73);
+  max-width: 100%;
   color: white !important;
   text-align: center;
   font-size: 15px;
@@ -32,19 +33,26 @@ h4,
 }
 
 .modal-content {
-  width: 500px;
-  background-color: #fff;
+  margin-bottom: 200px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  width: 35%;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: translateY(-200px);
   transition: all 0.3s ease-in-out;
 }
 
-.modal-header,
-.modal-footer {
+.modal-header {
+  text-align: center;
   padding: 10px;
 }
 
 .modal-title {
-  margin: 0;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: black;
 }
 
 .modal-body {
@@ -55,4 +63,58 @@ h4,
 
 .modal.show .modal-content {
   transform: translateY(0);
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.form-group label {
+  white-space: nowrap;
+}
+
+#show-password {
+  margin-bottom: 5px;
+  margin-right: 340px;
+}
+
+.modal-body button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  max-width: 20%;
+}
+
+a {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group label {
+  margin-left: 5px;
+  font-weight: normal;
 }

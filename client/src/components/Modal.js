@@ -41,9 +41,9 @@ function Modal({ onClose, title, show, content }) {
     },
   });
   return (
-    <div className={`modal ${show ? "show" : ""}`} onClick={onClose}>
+    <div className={`modal ${show ? "show" : ""}`}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header" style={{ padding: "10px 50px" }}>
+        <div className="modal-header">
           <h1 className="modal-title">{title}</h1>
           <br></br>
         </div>
@@ -66,15 +66,16 @@ function Modal({ onClose, title, show, content }) {
                 onChange={formik.handleChange}
                 value={formik.values.password}
               ></input>
-              <input
-                type="checkbox"
-                id="show-password"
-                name="show-password"
-                value="password"
-                onChange={handleChange}
-              ></input>
-              <label htmlFor="show-password">Show Password?</label>
-              <br></br>
+              <div className="form-group">
+                <label htmlFor="show-password">Show Password?</label>
+                <input
+                  type="checkbox"
+                  id="show-password"
+                  name="show-password"
+                  value="password"
+                  onChange={handleChange}
+                ></input>
+              </div>
               <button>Login</button>
               <a href="/register">Don't have an account?</a>
             </form>
@@ -82,11 +83,7 @@ function Modal({ onClose, title, show, content }) {
             <p>{content}</p>
           )}
         </div>
-        <div className="modal-footer">
-          <button type="submit" onClick={onClose} className="button">
-            Close
-          </button>
-        </div>
+        <div className="modal-footer"></div>
       </div>
     </div>
   );

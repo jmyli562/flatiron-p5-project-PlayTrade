@@ -7,7 +7,7 @@ function Home({ games }) {
       <main>
         <div className="header-content">
           <section className="hero">
-            <h1>Welcome to Your Video Game Store</h1>
+            <h1>Welcome to PlayTrade!</h1>
             <p>Discover, buy, and play the latest video games!</p>
             <a href="/games" className="cta-button">
               Explore Games

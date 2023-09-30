@@ -122,7 +122,7 @@ function App() {
       </Switch>
       <Switch>
         <Route exact path="/library">
-          <GameLibrary></GameLibrary>
+          <GameLibrary />
         </Route>
       </Switch>
     </div>

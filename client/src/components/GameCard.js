@@ -50,6 +50,7 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
       <br></br>
       {/*if the user is not logged in gray out the add game to cart button and disable clicking */}
       {/*if the game is already in the cart, do not allow the user to add the game again... disable the button*/}
+      {/*do not let the user add a game to the cart if the game is already in their cart */}
       {isLoggedIn && currUser.library.some((game) => game.name === title) ? (
         <button className="game-card-button" disabled="true">
           Already owned

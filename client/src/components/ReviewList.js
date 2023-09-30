@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import "../components/css/ReviewList.css";
 import CommentList from "./CommentList";
 import { AppContext } from "../context/AppProvider";
-import { format } from "date-fns";
 import StarRating from "./StarRating";
 function ReviewList({ selectedGame, allGames, setAllGames }) {
   function handleUpdateReview(e) {
@@ -107,8 +106,11 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
       })
       .catch((error) => {
         console.error("Error deleting review:", error);
-        // Handle any errors here
       });
+
+    fetch(`/comments/${currUser.id}`, {
+      method: "DELETE",
+    });
   }
   useEffect(() => {
     fetch("/comments")
