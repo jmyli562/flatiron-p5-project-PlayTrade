@@ -11,7 +11,7 @@ from datetime import datetime
 
 # Local imports
 from config import app, db, api
-from models import User, Review, Comment, Game
+from models import User, Review, Comment, Game, game_library
 
 # Add your model imports
 
@@ -171,14 +171,25 @@ api.add_resource(Games, "/games")
 
 
 class GameLibrary(Resource):
-    def get(self, id):
+    def get(self):
         pass
 
-    def post(self):
-        pass
+    def patch(self):
+        data = request.get_json()
+
+        user = User.query.filter(User.id == data["user_id"]).first()
+
+        for game in data["games"]:
+            new_game = Game.query.filter(Game.id == game["id"]).first()
+            user.library.append(new_game)
+
+        db.session.add(user)
+        db.session.commit()
+
+        return user.to_dict(), 200
 
 
-api.add_resource(GameLibrary, "/<int:id>/library")
+api.add_resource(GameLibrary, "/library")
 
 
 class Comments(Resource):
