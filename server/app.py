@@ -221,7 +221,17 @@ class Comments(Resource):
             return {"errors": errors}, 422
 
     def delete(self, id):
-        pass
+        comment = Comment.query.filter(Comment.user_id == id).all()
+
+        db.session.delete(comment)
+
+        db.session.commit()
+
+        response_body = {"delete_successful": True, "message": "Comment deleted"}
+
+        response = make_response(response_body, 200)
+
+        return response
 
 
 api.add_resource(Comments, "/comments")
@@ -259,12 +269,6 @@ class Reviews(Resource):
                     errors.append(str(error))
 
             return {"errors": errors}, 422
-
-    def patch(self):
-        pass
-
-    def delete(self):
-        pass
 
 
 api.add_resource(Reviews, "/reviews")
