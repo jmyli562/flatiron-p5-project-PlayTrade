@@ -42,10 +42,11 @@ function NavBar() {
         </li>
         {isLoggedIn ? (
           <li className="nav-item">
-            <Link to="/cart">
-              🛒 (
-              {shoppingCart.length >= 1 ? shoppingCart.length + "item" : null})
-            </Link>
+            {shoppingCart.length == 0 ? (
+              <Link to="/cart">Shopping Cart</Link>
+            ) : (
+              <Link to="/cart">Cart ({shoppingCart.length} items)</Link>
+            )}
           </li>
         ) : (
           <li className="nav-item">

@@ -9,6 +9,17 @@
   margin-top: 20px;
 }
 
+.shopping-cart h1 {
+  margin-top: 100px;
+  text-align: center;
+  margin-bottom: 200px;
+}
+
+.shopping-cart h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .checkout-item-game {
   align-items: center;
   border-radius: 5px;
@@ -82,4 +93,8 @@
 .remove-game {
   text-align: right;
   margin-left: 10px;
+}
+
+.purchase-button:disabled {
+  background-color: rgb(92, 88, 84);
 }
