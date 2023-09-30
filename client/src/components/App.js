@@ -4,12 +4,14 @@ import { AppContext } from "../context/AppProvider";
 import Register from "./Register";
 import ReviewList from "./ReviewList";
 import ShoppingCart from "./ShoppingCart";
+import GameLibrary from "./GameLibrary";
 import Login from "./Login";
 import Home from "./Home";
 import NavBar from "./NavBar";
 import GameList from "./GameList";
 import GameReview from "./GameReview";
 import "../components/css/App.css";
+import OrderSuccess from "./OrderSuccess";
 function App() {
   const [featuredGames, setFeaturedGames] = useState([]);
   const [allGames, setAllGames] = useState([]);
@@ -111,6 +113,16 @@ function App() {
       <Switch>
         <Route exact path="/cart">
           <ShoppingCart></ShoppingCart>
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path="/order/success">
+          <OrderSuccess></OrderSuccess>
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path="/library">
+          <GameLibrary></GameLibrary>
         </Route>
       </Switch>
     </div>

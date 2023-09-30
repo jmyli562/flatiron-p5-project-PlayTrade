@@ -21,7 +21,7 @@ function GameList({ allgames }) {
     }
   });
   return (
-    <div style={{ backgroundColor: "white" }}>
+    <div>
       <div className="search-bar">
         <input
           type="text"

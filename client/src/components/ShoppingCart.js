@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppProvider";
 import "../components/css/ShoppingCart.css";
+import { useHistory } from "react-router-dom";
 function ShoppingCart() {
+  const history = useHistory();
   function updateUserPoints() {
     let num_points = currUser.points - calculateTotal();
     currUser.points = num_points;
@@ -40,11 +42,12 @@ function ShoppingCart() {
       .then((resp) => resp.json())
       //retrieving the user with the updated library
       .then((user) => {
-        setCurrUser(user);
+        setCurrUser({ ...currUser, library: user.library });
         //update the currUser's points on the backend
         //update the currUser's point by updating state
         updateUserPoints();
         setShoppingCart([]);
+        history.push("/order/success");
       });
   }
   function calculateTotal() {
@@ -66,11 +69,11 @@ function ShoppingCart() {
   return (
     <div>
       <div className="shopping-cart">
-        <h3>Cart</h3>
+        <h3 className="cart-header">Cart</h3>
         <hr></hr>
         {shoppingCart.length === 0 ? (
           <>
-            <h1>Your cart is empty.</h1>
+            <h1 className="cart-message">Your cart is empty.</h1>
           </>
         ) : (
           shoppingCart.map((item) => (

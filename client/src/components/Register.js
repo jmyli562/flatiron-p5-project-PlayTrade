@@ -52,7 +52,7 @@ function Login() {
     },
   });
   return (
-    <div>
+    <div className="register-form-container">
       <section className="register-section">
         <h1>Register an Account</h1>
         <p>Join our gaming community and get access to exclusive content.</p>

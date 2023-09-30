@@ -9,13 +9,13 @@
   margin-top: 20px;
 }
 
-.shopping-cart h1 {
+.shopping-cart .cart-message {
   margin-top: 100px;
   text-align: center;
-  margin-bottom: 200px;
+  margin-bottom: 100px;
 }
 
-.shopping-cart h3 {
+.shopping-cart .cart-header {
   text-align: center;
   margin-bottom: 10px;
 }
