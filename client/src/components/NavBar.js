@@ -8,7 +8,6 @@ function NavBar() {
       method: "DELETE",
     }).then((resp) => {
       if (resp.ok) {
-        setCurrUser({});
         setLoggedIn(() => !isLoggedIn);
         history.push("/home");
       }

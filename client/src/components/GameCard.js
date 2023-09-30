@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import StarRating from "./StarRating";
 import { AppContext } from "../context/AppProvider";
 import "../components/css/GameCard.css";
-import ShoppingCart from "./ShoppingCart";
 function GameCard({ game, title, image, releaseDate, rating, price }) {
   function addGameToCart(game) {
     //need to check if the game already exists in the cart
@@ -16,6 +15,7 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
   }
   const history = useHistory();
   const {
+    currUser,
     setSelectedGame,
     isLoggedIn,
     createSlugTitle,
@@ -50,15 +50,20 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
       <br></br>
       {/*if the user is not logged in gray out the add game to cart button and disable clicking */}
       {/*if the game is already in the cart, do not allow the user to add the game again... disable the button*/}
-      {/* */}
-      <button
-        className="game-card-button"
-        disabled={isLoggedIn ? false : true}
-        style={{ backgroundColor: isLoggedIn ? "" : "gray" }}
-        onClick={() => addGameToCart(game)}
-      >
-        Add Game to Cart 🛒
-      </button>
+      {isLoggedIn && currUser.library.some((game) => game.name === title) ? (
+        <button className="game-card-button" disabled="true">
+          Already owned
+        </button>
+      ) : (
+        <button
+          className="game-card-button"
+          disabled={isLoggedIn ? false : true}
+          style={{ backgroundColor: isLoggedIn ? "" : "gray" }}
+          onClick={() => addGameToCart(game)}
+        >
+          Add Game to Cart 🛒
+        </button>
+      )}
     </div>
   );
 }
