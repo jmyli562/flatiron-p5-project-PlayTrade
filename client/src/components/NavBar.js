@@ -56,12 +56,9 @@ function NavBar() {
         {isLoggedIn ? (
           <li className="nav-item">
             <Link to="/profile" style={{ color: "#ff5722" }}>
-              Welcome, {currUser.username}
+              Welcome, {currUser.username} 👤
             </Link>
-            <button
-              style={{ textAlign: "center", marginLeft: "70px" }}
-              onClick={handleLogout}
-            >
+            <button className="logout" onClick={handleLogout}>
               Logout
             </button>
           </li>

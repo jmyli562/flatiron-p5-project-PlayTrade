@@ -55,15 +55,17 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
         <button className="game-card-button" disabled="true">
           Already owned
         </button>
-      ) : (
-        <button
-          className="game-card-button"
-          disabled={isLoggedIn ? false : true}
-          style={{ backgroundColor: isLoggedIn ? "" : "gray" }}
-          onClick={() => addGameToCart(game)}
-        >
-          Add Game to Cart 🛒
-        </button>
+      ) : game.hasOwnProperty("background_image") ? null : (
+        <>
+          <button
+            className="game-card-button"
+            disabled={isLoggedIn ? false : true}
+            style={{ backgroundColor: isLoggedIn ? "" : "gray" }}
+            onClick={() => addGameToCart(game)}
+          >
+            Add Game to Cart 🛒
+          </button>
+        </>
       )}
     </div>
   );

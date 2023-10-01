@@ -43,6 +43,14 @@
   margin: 0;
 }
 
+.logout {
+  background-color: #f00;
+  color: #fff;
+  padding: 5px 20px;
+  cursor: pointer;
+  margin-left: 110px;
+}
+
 .nav-item a {
   text-decoration: none;
   color: #fff;

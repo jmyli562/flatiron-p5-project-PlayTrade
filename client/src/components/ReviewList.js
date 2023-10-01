@@ -19,15 +19,16 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
     })
       .then((resp) => resp.json())
       .then((patchedReview) => {
+        console.log(patchedReview);
         //update the state of the selectedGame and allGames
         // Create a new array with the updated review replacing the old one
         const reviewIndex = selectedGame.reviews.findIndex(
           (review) => review.id === patchedReview.id
         );
-
+        const updatedReviews = [];
         if (reviewIndex !== -1) {
           // Create a new array with the updated review replacing the old one
-          const updatedReviews = [...selectedGame.reviews];
+          updatedReviews = [...selectedGame.reviews];
           updatedReviews[reviewIndex] = patchedReview;
 
           // Update the selectedGame state with the updated reviews
@@ -40,7 +41,7 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
           if (game.id === patchedReview.game_id) {
             const updatedGame = {
               ...game,
-              reviews: [patchedReview],
+              reviews: updatedReviews,
             };
             return updatedGame;
           } else {
@@ -145,6 +146,7 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
     new Array(selectedGame.reviews.length).fill("")
   );
   const { currUser } = useContext(AppContext);
+  console.log(currUser);
   const history = useHistory();
   function handleSubmit(index, review_id) {
     const commentContents = commentContent[index];
@@ -198,7 +200,7 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
   const reviews = selectedGame.reviews.map((review, index) => (
     <div key={review.id} className="review" id={review.id}>
       {/*toggling between showing the review or the edit review view*/}
-      {editMode ? (
+      {editMode && currUser.id === review.user_id ? (
         <>
           <form onSubmit={(e) => handleUpdateReview(e)}>
             <h3>Editing Your Review</h3>
