@@ -19,13 +19,12 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
     })
       .then((resp) => resp.json())
       .then((patchedReview) => {
-        console.log(patchedReview);
         //update the state of the selectedGame and allGames
         // Create a new array with the updated review replacing the old one
         const reviewIndex = selectedGame.reviews.findIndex(
           (review) => review.id === patchedReview.id
         );
-        const updatedReviews = [];
+        let updatedReviews = [];
         if (reviewIndex !== -1) {
           // Create a new array with the updated review replacing the old one
           updatedReviews = [...selectedGame.reviews];
@@ -146,7 +145,6 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
     new Array(selectedGame.reviews.length).fill("")
   );
   const { currUser } = useContext(AppContext);
-  console.log(currUser);
   const history = useHistory();
   function handleSubmit(index, review_id) {
     const commentContents = commentContent[index];
@@ -244,6 +242,9 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
         <>
           <p>Reviewer:{review.user.username}</p>
           <p>Date posted:{review.date_created}</p>
+          {review.date_updated ? (
+            <p>Updated at: {review.date_updated}</p>
+          ) : null}
           <StarRating rating={review.rating}></StarRating>
           <p>{review.content}</p>
           {currUser.id === review.user.id ? (
