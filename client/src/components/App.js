@@ -5,6 +5,7 @@ import Register from "./Register";
 import ReviewList from "./ReviewList";
 import ShoppingCart from "./ShoppingCart";
 import GameLibrary from "./GameLibrary";
+import Profile from "./Profile";
 import Login from "./Login";
 import Home from "./Home";
 import NavBar from "./NavBar";
@@ -123,6 +124,11 @@ function App() {
       <Switch>
         <Route exact path="/library">
           <GameLibrary />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path="/profile">
+          <Profile user={currUser} />
         </Route>
       </Switch>
     </div>

@@ -52,7 +52,7 @@ function GameCard({ game, title, image, releaseDate, rating, price }) {
       {/*if the game is already in the cart, do not allow the user to add the game again... disable the button*/}
       {/*do not let the user add a game to the cart if the game is already in their cart */}
       {isLoggedIn && currUser.library.some((game) => game.name === title) ? (
-        <button className="game-card-button" disabled="true">
+        <button className="game-card-button" disabled={true}>
           Already owned
         </button>
       ) : game.hasOwnProperty("background_image") ? null : (
