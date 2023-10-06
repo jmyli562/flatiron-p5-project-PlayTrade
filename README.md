@@ -1,11 +1,7 @@
-# Phase 4 Full-Stack Application Project Template
+# Phase 5 Full Stack Application
 
-## Learning Goals
-
-- Discuss the basic directory structure of a full-stack Flask/React application.
-- Carry out the first steps in creating your Phase 4 project.
-
----
+## ERD Diagram
+![Untitled](https://github.com/jmyli562/flatiron-p5-project-PlayTrade/assets/60550632/6b061437-3f2e-4072-9ea3-5976248fd058)
 
 ## Introduction
 
