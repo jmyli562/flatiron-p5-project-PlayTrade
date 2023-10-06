@@ -9,7 +9,7 @@ from config import db, bcrypt
 
 game_library = db.Table(
     "game_library",
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id", ondelete="CASCADE")),
     db.Column("game_id", db.Integer, db.ForeignKey("games.id")),
 )
 
@@ -20,6 +20,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
+    profile_picture = db.Column(db.String)
     library = db.relationship(
         "Game", secondary=game_library, back_populates="owners", lazy="dynamic"
     )

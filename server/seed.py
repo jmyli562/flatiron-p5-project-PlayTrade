@@ -5,6 +5,8 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
+from sqlalchemy.orm import joinedload
+from sqlalchemy import text
 
 # Local imports
 from app import app
@@ -15,9 +17,6 @@ if __name__ == "__main__":
     with app.app_context():
         print("Starting seed...")
         # Seed code goes here!
-        # User.query.delete()
-        # Review.query.delete()
-        # Comment.query.delete()
-        user = User.query.filter(User.id == 2).first()
-        user.library = []
+        User.query.delete()
+        Review.query.delete()
         db.session.commit()

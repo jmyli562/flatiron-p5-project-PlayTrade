@@ -96,12 +96,14 @@ class Login(Resource):
 
         user = User.query.filter(User.username == username).first()
 
-        if user.authenticate(password):
-            session["user_id"] = user.id
+        if user:
+            if user.authenticate(password):
+                session["user_id"] = user.id
+                return make_response(user.to_dict(), 200)
 
-            return make_response(user.to_dict(), 200)
+            return {"error": "Invalid username or password"}, 401
 
-        return {"error": "Invalid username or password"}, 401
+        return {"error": "User not found"}, 404
 
 
 api.add_resource(Login, "/login")
@@ -220,10 +222,16 @@ class Comments(Resource):
 
             return {"errors": errors}, 422
 
-    def delete(self, id):
-        comment = Comment.query.filter(Comment.user_id == id).all()
 
-        db.session.delete(comment)
+api.add_resource(Comments, "/comments")
+
+
+class CommentsByID(Resource):
+    def delete(self, id):
+        comments = Comment.query.filter(Comment.user_id == id).all()
+
+        for comment in comments:
+            db.session.delete(comment)
 
         db.session.commit()
 
@@ -234,7 +242,7 @@ class Comments(Resource):
         return response
 
 
-api.add_resource(Comments, "/comments")
+api.add_resource(CommentsByID, "/comments/<int:id>")
 
 
 class Reviews(Resource):
@@ -321,6 +329,26 @@ api.add_resource(ReviewByID, "/reviews/<int:id>")
 @app.route("/")
 def index():
     return "<h1>Project Server</h1>"
+
+
+@app.route("/check-username/<string:name>")
+def check_username(name):
+    user = User.query.filter(User.username == name)
+
+    if user:
+        return {"message": "user found."}, 200
+    else:
+        return {"message": "user not found"}, 404
+
+
+@app.route("/check-email/<string:email>")
+def check_email(email):
+    user = User.query.filter(User.email == email)
+
+    if user:
+        return {"message": "email found."}, 200
+    else:
+        return {"message": "email not found"}, 404
 
 
 if __name__ == "__main__":
