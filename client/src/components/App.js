@@ -128,7 +128,7 @@ function App() {
       </Switch>
       <Switch>
         <Route exact path="/profile">
-          <Profile user={currUser} />
+          <Profile user={currUser} updateCurrUser={setCurrUser} />
         </Route>
       </Switch>
     </div>

@@ -33,9 +33,7 @@ function Modal({ onClose, title, show, content }) {
           onClose();
           history.push("/home");
         } else {
-          resp
-            .json()
-            .then((err) => window.alert("Username or password is incorrect."));
+          resp.json().then((err) => window.alert(err["error"]));
         }
       });
     },
