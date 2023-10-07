@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
 import "../components/css/Profile.css";
-function Profile({ user, setCurrUser }) {
+import { AppContext } from "../context/AppProvider";
+function Profile({ user }) {
   function handleImageUpload(e) {
     e.preventDefault();
 
@@ -27,7 +28,7 @@ function Profile({ user, setCurrUser }) {
       console.error("There was an error with the server:", error);
     }
   };
-
+  const { setCurrUser } = useContext(AppContext);
   const [toggleEditMode, setEditMode] = useState(false);
   const [file, setFile] = useState("");
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
@@ -39,17 +40,53 @@ function Profile({ user, setCurrUser }) {
       password: "",
       confirm_password: "",
     },
+    onSubmit: (values, { resetForm }) => {
+      const new_form = {};
+      // Check if fields have been edited and include them in editedData
+      if (values.username !== user.username && values.username !== "") {
+        new_form.username = values.username;
+      }
+
+      if (values.email !== user.email && values.email !== "") {
+        new_form.email = values.email;
+      }
+
+      if (values.password && values.password !== "" && values.password !== "") {
+        new_form.password_hash = values.password;
+      }
+
+      if (file) {
+        const imageURL = URL.createObjectURL(file);
+        new_form.profile_picture = imageURL;
+      }
+
+      fetch(`/users/${user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(new_form),
+      })
+        .then((response) => response.json())
+        .then((user) => {
+          setCurrUser(user);
+          resetForm({ values: "" });
+          setEditMode(() => !toggleEditMode);
+        });
+    },
     validate: (values) => {
       let errors = {};
-      /*need validations to make sure new username isn't the same as the old one, same with email */
-      /*also need to check to make sure username and email are unique (not in the database already) */
-      /*need to also check if the email is formatted properly using regex */
-      /*need to verify that the new password matches the one that was re-entered */
+      /*need validations to make sure new username isn't the same as the old one, same with email (DONE)*/
+      /*also need to check to make sure username and email are unique (not in the database already) (DONE)*/
+      /*need to also check if the email is formatted properly using regex (DONE)*/
+      /*need to verify that the new password matches the one that was re-entered (DONE)*/
       if (values.username === user.username) {
         errors.username = "Please enter a new username";
       }
       if (values.email === user.email) {
         errors.email = "Please enter a new email";
+      }
+      if (values.email === "") {
       } else if (
         //regex validation for email
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
