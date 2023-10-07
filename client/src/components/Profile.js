@@ -56,8 +56,22 @@ function Profile({ user }) {
       }
 
       if (file) {
-        const imageURL = URL.createObjectURL(file);
-        new_form.profile_picture = imageURL;
+        const newFormData = new FormData();
+        newFormData.append("file", file);
+        fetch(`/upload-profile-picture/${user.id}`, {
+          method: "POST",
+          body: newFormData,
+        })
+          .then((response) => response.json())
+          .then((user) => {
+            setCurrUser((prevState) => ({
+              ...prevState,
+              profile_picture: user.profile_picture,
+            }));
+          })
+          .catch((error) => {
+            console.error("Error uploading profile picture:", error);
+          });
       }
 
       fetch(`/users/${user.id}`, {
@@ -69,7 +83,11 @@ function Profile({ user }) {
       })
         .then((response) => response.json())
         .then((user) => {
-          setCurrUser(user);
+          setCurrUser((prevState) => ({
+            ...prevState,
+            username: user.username,
+            email: user.email,
+          }));
           resetForm({ values: "" });
           setEditMode(() => !toggleEditMode);
         });
@@ -108,7 +126,7 @@ function Profile({ user }) {
         {toggleEditMode ? (
           <>
             <h1>Editing Profile</h1>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
               <div
                 className="circle-container"
                 style={{
