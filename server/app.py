@@ -333,22 +333,23 @@ def index():
 
 @app.route("/check-username/<string:name>")
 def check_username(name):
-    user = User.query.filter(User.username == name)
+    print(name)
+    user = User.query.filter(User.username == name).first()
 
     if user:
-        return {"message": "user found."}, 200
+        return {"found": True}, 200
     else:
-        return {"message": "user not found"}, 404
+        return {"found": False}, 404
 
 
 @app.route("/check-email/<string:email>")
 def check_email(email):
-    user = User.query.filter(User.email == email)
+    user = User.query.filter(User.email == email).first()
 
     if user:
-        return {"message": "email found."}, 200
+        return {"found": True}, 200
     else:
-        return {"message": "email not found"}, 404
+        return {"found": False}, 404
 
 
 if __name__ == "__main__":
