@@ -206,7 +206,9 @@ function Profile({ user }) {
                   {formik.errors.password_mismatch}
                 </p>
               ) : null}
-              <button type="submit">Save Profile</button>
+              <button type="submit" className="save-profile">
+                Save Profile
+              </button>
               <button onClick={() => setEditMode(!toggleEditMode)}>
                 Cancel
               </button>
@@ -223,20 +225,29 @@ function Profile({ user }) {
                   : "url(https://freesvg.org/img/abstract-user-flat-4.png)",
               }}
             ></div>
-            <label>Username:</label>
-            <input
-              type="text"
-              placeholder={user.username}
-              readOnly={true}
-            ></input>
-            <label>Email:</label>
-            <input type="text" placeholder={user.email} readOnly={true}></input>
-            <label>Password:</label>
-            {/*obviously not the actual password of the user but a placeholder */}
-            <input type="text" placeholder={"********"} readOnly={true}></input>
-            <button onClick={() => setEditMode(!toggleEditMode)}>
-              Edit Profile
-            </button>
+            <div className="input-container">
+              <label>Username:</label>
+              <input
+                type="text"
+                placeholder={user.username}
+                readOnly={true}
+              ></input>
+              <label>Email:</label>
+              <input
+                type="text"
+                placeholder={user.email}
+                readOnly={true}
+              ></input>
+              <label>Password:</label>
+              <input
+                type="text"
+                placeholder={"********"}
+                readOnly={true}
+              ></input>
+              <button onClick={() => setEditMode(!toggleEditMode)}>
+                Edit Profile
+              </button>
+            </div>
           </>
         )}
       </div>
