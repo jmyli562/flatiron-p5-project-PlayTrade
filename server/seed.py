@@ -19,4 +19,5 @@ if __name__ == "__main__":
         # Seed code goes here!
         User.query.delete()
         Review.query.delete()
+        Comment.query.delete()
         db.session.commit()
