@@ -3,14 +3,15 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session, make_response, jsonify
+from flask import request, session, make_response, jsonify, send_from_directory
+import os
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import subqueryload, load_only
 from datetime import datetime
 
 # Local imports
-from config import app, db, api
+from config import app, db, api, UPLOAD_FOLDER
 from models import User, Review, Comment, Game, game_library
 
 # Add your model imports
@@ -350,6 +351,38 @@ def check_email(email):
         return {"found": True}, 200
     else:
         return {"found": False}, 404
+
+
+@app.route("/upload-profile-picture/<int:id>", methods=["POST"])
+def upload_profile_picture(id):
+    try:
+        if "file" not in request.files:
+            return jsonify({"message": "No file part"}), 400
+
+        file = request.files["file"]
+
+        if file.filename == "":
+            return jsonify({"message": "No selected file"}), 400
+
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], file.filename))
+
+        user = User.query.get(id)
+        user.profile_picture = f"/{UPLOAD_FOLDER}/{file.filename}"
+
+        db.session.commit()
+
+        return user.to_dict(), 200
+
+    except Exception as e:
+        return (
+            jsonify({"message": "error uploading profile picture", "error": str(e)}),
+            500,
+        )
+
+
+@app.route("/uploads/profile-pictures/<path:filename>")
+def serve_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 
 if __name__ == "__main__":

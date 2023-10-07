@@ -18,6 +18,8 @@ app = Flask(__name__)
 app.secret_key = b'V!\x87\xae\x9d6\xdc\xc0"\xc1\x93\x00-\xa2=\x12'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+UPLOAD_FOLDER = "uploads/profile-pictures"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.json.compact = False
 
 # Define metadata, instantiate db
