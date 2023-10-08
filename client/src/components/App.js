@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { withRouter, Switch, Route, useHistory } from "react-router-dom";
+import { withRouter, Switch, Route } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import Register from "./Register";
 import ReviewList from "./ReviewList";

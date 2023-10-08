@@ -13,14 +13,17 @@ function NavBar() {
       }
     });
   }
-  const { currUser, setCurrUser, isLoggedIn, setLoggedIn, shoppingCart } =
+  const { currUser, isLoggedIn, setLoggedIn, shoppingCart } =
     useContext(AppContext);
   const history = useHistory();
   return (
     <nav className="navbar">
       <div className="navbar-logo">
         <Link to="/">PlayTrade</Link>
-        <img src="https://github.com/jmyli562/flatiron-p5-project-PlayTrade/assets/60550632/135821c8-47e1-4ab0-b8b2-8a1f2f31fea2"></img>
+        <img
+          src="https://github.com/jmyli562/flatiron-p5-project-PlayTrade/assets/60550632/135821c8-47e1-4ab0-b8b2-8a1f2f31fea2"
+          alt="logo"
+        ></img>
       </div>
       {isLoggedIn ? (
         <ul className="points-balance">Balance: {currUser.points} points</ul>

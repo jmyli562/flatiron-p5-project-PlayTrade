@@ -4,8 +4,7 @@ import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 function Modal({ onClose, title, show, content }) {
-  const { currUser, setCurrUser, isLoggedIn, setLoggedIn } =
-    useContext(AppContext);
+  const { setCurrUser, setLoggedIn } = useContext(AppContext);
   const history = useHistory();
   const [checked, setChecked] = useState(false);
   function handleChange(e) {
