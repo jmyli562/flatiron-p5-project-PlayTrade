@@ -28,6 +28,11 @@ Video game data was retrieved from the RAWG.io API: https://rawg.io/apidocs
 ## Getting Started 
 
 ### Installation
+NOTE: A partially working demo of my application has been deployed to Netlify but some of the features do not appear to be working. 
+If you want to view the demo here is the link: https://playtradegames.netlify.app (I am working on fixing the issues with the backend  on Render)
+
+If you would like to view the fully functioning app please follow the instructions below.
+
 Make sure that you have Python version 3.8.13 installed before you proceeed with the instructions below.
 Once you have Python installed please follow the steps below inside of a new terminal to get this application running on your local machine.
 
