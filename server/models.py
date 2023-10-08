@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from config import db, bcrypt
+import os
 
 # Models go here!
 
@@ -60,6 +61,17 @@ class User(db.Model, SerializerMixin):
     def validate_password(self, key, value):
         if value == "":
             raise ValueError("Password must not be blank.")
+        return value
+
+    @validates("profile_picture")
+    def validate_profile_picture(self, key, value):
+        allowed_extensions = [".jpg", ".jpeg", ".png"]
+
+        file_extension = os.path.splitext(value)[1].lower()
+
+        if file_extension not in allowed_extensions:
+            raise ValueError("Invalid image file format")
+
         return value
 
 

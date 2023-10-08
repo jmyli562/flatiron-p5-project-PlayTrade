@@ -373,10 +373,10 @@ def upload_profile_picture(id):
 
         return user.to_dict(), 200
 
-    except Exception as e:
+    except ValueError as e:
         return (
-            jsonify({"message": "error uploading profile picture", "error": str(e)}),
-            500,
+            jsonify({"error": str(e)}),
+            400,
         )
 
 
