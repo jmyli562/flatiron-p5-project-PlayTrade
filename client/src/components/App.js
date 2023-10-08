@@ -46,10 +46,7 @@ function App() {
       )
         .then((resp) => resp.json())
         .then((data) => {
-          const tempArr = [];
-          data.results.map((gameData) => {
-            tempArr.push(gameData);
-          });
+          const tempArr = data.results.map((gameData) => gameData);
           setFeaturedGames(tempArr);
           //addGamesToDatabase(tempArr);
         });
