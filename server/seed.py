@@ -9,7 +9,7 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy import text
 
 # Local imports
-from app import app
+from server.app import app
 from models import db, User, Game, Review, Comment, game_library
 
 if __name__ == "__main__":
