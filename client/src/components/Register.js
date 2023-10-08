@@ -11,7 +11,7 @@ function Login() {
       password: "",
     },
     onSubmit: (values, { resetForm }) => {
-      fetch("/signup", {
+      fetch("https://playtrade-backend.onrender.com/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

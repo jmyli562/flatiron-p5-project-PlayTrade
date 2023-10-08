@@ -29,7 +29,7 @@ function GameReview({ allGames, setAllGames, currUser, game }) {
     currUser.points = num_points;
     setCurrUser({ ...currUser });
     //we need to update the users points on the backend
-    fetch(`/users/${currUser.id}`, {
+    fetch(`https://playtrade-backend.onrender.com/users/${currUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ function GameReview({ allGames, setAllGames, currUser, game }) {
     onSubmit: (values, { resetForm }) => {
       values.user_id = currUser.id;
       values.game_id = game.id;
-      fetch("/reviews", {
+      fetch("https://playtrade-backend.onrender.com/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

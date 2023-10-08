@@ -4,7 +4,7 @@ import "../components/css/NavBar.css";
 import { AppContext } from "../context/AppProvider";
 function NavBar() {
   function handleLogout() {
-    fetch("/logout", {
+    fetch("https://playtrade-backend.onrender.com/logout", {
       method: "DELETE",
     }).then((resp) => {
       if (resp.ok) {

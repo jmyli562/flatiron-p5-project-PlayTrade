@@ -16,7 +16,7 @@ function Modal({ onClose, title, show, content }) {
       password: "",
     },
     onSubmit: (values, { resetForm }) => {
-      fetch("/login", {
+      fetch("https://playtrade-backend.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "../components/css/GameList.css";
 import GameCard from "./GameCard";
 function GameList({ allgames }) {
-  console.log(allgames);
   const [titleFilter, setTitleFilter] = useState("");
   const [sortFilter, setSortFilter] = useState("");
   const filteredGames = allgames.filter((game) =>

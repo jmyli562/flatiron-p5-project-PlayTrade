@@ -9,7 +9,7 @@ function ShoppingCart() {
     currUser.points = num_points;
     setCurrUser({ ...currUser });
     //we need to update the users points on the backend
-    fetch(`/users/${currUser.id}`, {
+    fetch(`https://playtrade-backend.onrender.com/users/${currUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +29,7 @@ function ShoppingCart() {
 
     //loop through the shoppingCart array and for each item send a fetch request to the game_library endpoint.
 
-    fetch("/library", {
+    fetch("https://playtrade-backend.onrender.com/library", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

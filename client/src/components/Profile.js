@@ -19,7 +19,9 @@ function Profile({ user }) {
   const checkIfUnique = async (value, field) => {
     const endpoint = field === "username" ? "check-username" : "check-email";
     try {
-      const response = await fetch(`/${endpoint}/${value}`);
+      const response = await fetch(
+        `https://playtrade-backend.onrender.com/${endpoint}/${value}`
+      );
       if (response.ok) {
         const data = await response.json();
         return data.found;
@@ -58,10 +60,13 @@ function Profile({ user }) {
       if (file) {
         const newFormData = new FormData();
         newFormData.append("file", file);
-        fetch(`/upload-profile-picture/${user.id}`, {
-          method: "POST",
-          body: newFormData,
-        })
+        fetch(
+          `https://playtrade-backend.onrender.com/upload-profile-picture/${user.id}`,
+          {
+            method: "POST",
+            body: newFormData,
+          }
+        )
           .then((response) => {
             if (!response.ok) {
               throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -73,7 +78,7 @@ function Profile({ user }) {
               ...prevState,
               profile_picture: user.profile_picture,
             }));
-            fetch(`/users/${user.id}`, {
+            fetch(`https://playtrade-backend.onrender.com/users/${user.id}`, {
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",

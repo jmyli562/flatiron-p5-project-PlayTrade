@@ -7,7 +7,7 @@ import StarRating from "./StarRating";
 function ReviewList({ selectedGame, allGames, setAllGames }) {
   function handleUpdateReview(e) {
     e.preventDefault();
-    fetch(`/reviews/${reviewEditID}`, {
+    fetch(`https://playtrade-backend.onrender.com/reviews/${reviewEditID}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +72,7 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
     updatedGame.reviews = updatedGame.reviews.filter(
       (review) => review.id !== review_id
     );
-    fetch(`/reviews/${review_id}`, {
+    fetch(`https://playtrade-backend.onrender.com/reviews/${review_id}`, {
       method: "DELETE",
     })
       .then((resp) => {
@@ -108,12 +108,12 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
         console.error("Error deleting review:", error);
       });
 
-    fetch(`/comments/${currUser.id}`, {
+    fetch(`https://playtrade-backend.onrender.com/comments/${currUser.id}`, {
       method: "DELETE",
     });
   }
   useEffect(() => {
-    fetch("/comments")
+    fetch("https://playtrade-backend.onrender.com/comments")
       .then((resp) => resp.json())
       .then((comments) => {
         // Filter comments for the selected game's reviews
@@ -155,7 +155,7 @@ function ReviewList({ selectedGame, allGames, setAllGames }) {
       user_id: currUser.id,
     };
 
-    fetch("/comments", {
+    fetch("https://playtrade-backend.onrender.com/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

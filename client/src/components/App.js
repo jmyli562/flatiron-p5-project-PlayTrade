@@ -32,14 +32,16 @@ function App() {
   }
   */
   useEffect(() => {
-    fetch("/check_session").then((response) => {
-      if (response.ok) {
-        response.json().then(
-          (user) => setCurrUser(user),
-          setLoggedIn(() => !isLoggedIn)
-        );
+    fetch("https://playtrade-backend.onrender.com/check_session").then(
+      (response) => {
+        if (response.ok) {
+          response.json().then(
+            (user) => setCurrUser(user),
+            setLoggedIn(() => !isLoggedIn)
+          );
+        }
       }
-    });
+    );
     async function getFeaturedGames() {
       await fetch(
         `https://rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}&page=1&page_size=10`
@@ -52,13 +54,15 @@ function App() {
         });
     }
     async function getAllGames() {
-      await fetch("/games").then((response) => {
-        if (response.ok) {
-          response.json().then((games) => {
-            setAllGames(games);
-          });
+      await fetch("https://playtrade-backend.onrender.com/games").then(
+        (response) => {
+          if (response.ok) {
+            response.json().then((games) => {
+              setAllGames(games);
+            });
+          }
         }
-      });
+      );
     }
     getFeaturedGames();
     getAllGames();
