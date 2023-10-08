@@ -62,35 +62,39 @@ function Profile({ user }) {
           method: "POST",
           body: newFormData,
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP Error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
           .then((user) => {
             setCurrUser((prevState) => ({
               ...prevState,
               profile_picture: user.profile_picture,
             }));
+            fetch(`/users/${user.id}`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(new_form),
+            })
+              .then((response) => response.json())
+              .then((user) => {
+                setCurrUser((prevState) => ({
+                  ...prevState,
+                  username: user.username,
+                  email: user.email,
+                }));
+                resetForm({ values: "" });
+                setEditMode(() => !toggleEditMode);
+              });
           })
           .catch((error) => {
-            console.error("Error uploading profile picture:", error);
+            window.alert("Invalid image format. Please upload another image.");
           });
       }
-
-      fetch(`/users/${user.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(new_form),
-      })
-        .then((response) => response.json())
-        .then((user) => {
-          setCurrUser((prevState) => ({
-            ...prevState,
-            username: user.username,
-            email: user.email,
-          }));
-          resetForm({ values: "" });
-          setEditMode(() => !toggleEditMode);
-        });
     },
     validate: (values) => {
       let errors = {};
