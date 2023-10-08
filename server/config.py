@@ -9,12 +9,17 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SECRET_KEY = os.getenv("BCRYPT_SECRET_KEY")
 
 # Local imports
 
 # Instantiate app, set attributes
 app = Flask(__name__)
-app.secret_key = b'V!\x87\xae\x9d6\xdc\xc0"\xc1\x93\x00-\xa2=\x12'
+app.secret_key = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 UPLOAD_FOLDER = "uploads/profile-pictures"
